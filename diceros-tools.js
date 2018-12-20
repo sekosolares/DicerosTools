@@ -1,16 +1,16 @@
-/********************************************************************************
-*		Author: .asolares.                                              *
-*		Version: 8.2018.1                                               *
-*                                                                               *
-*		Este script contiene funciones con diferentes utilidades para   *
-*		diferentes eventos.                                             *
-*		Content:                                                        *
-*			> hide_column(col_no, id_tabla)                         *
-*			> tooltip(id, helpText)                                 *
-*			> filter_combo(filtro_id, combo_id)                     *
-*			> filter_table(filtro_id, table_id, cells_array)        *
-*			> toggle_column(col_no, id_tabla)                       *
-*********************************************************************************/
+/******************************************************************************
+*		Author: .asolares.                                              
+*		Version: 8.2018.1                                               
+*                                                                       
+*		Este script contiene funciones con diferentes utilidades para   
+*		diferentes eventos.                                             
+*		Content:                                                        
+*			> hide_column(col_no, id_tabla)                         
+*			> tooltip(id, helpText)                                 
+*			> filter_combo(filtro_id, combo_id)                     
+*			> filter_table(filtro_id, table_id, cells_array)        
+*			> toggle_column(col_no, id_tabla)                       
+********************************************************************************/
 
 
 /**** Variables para deteccion de browser en uso ****/
@@ -239,4 +239,29 @@ function toggle_column(col_no, id_tabla) {
 			cels[col_no].style.display = "none";
 		}
 	}
+}
+
+
+/*
+	Funcion pensada para que sea la que se llame desde los botones de impresion de reportes.
+	Version de Funcion:
+		> 1.0
+	Parametros:
+		> project: [integer] El id del proyecto en el que se encuentra el reporte que se llama.
+		> object: [integer] Id del objeto correspondiente al objeto que tiene el reporte.
+		> template: [String] [opcional] Especifica si hay que utilizar algun template en particular.
+		> params: [String] [opcional] En el caso de que haya que llenar parametros del lado del
+				  objeto en donde esta el reporte, se debe especificar aqui. 
+				  e.g.  "&VACAMPO=1&VACAMPO2=2"
+*/
+function open_report(project, object, template=0, params=0){
+	var url = 'rbplus?p=' + project + '&o=' + object;
+	var props = 'dependent:yes,directories:no,location:no,menubar,resizable,toolbar:yes,titlebar:no,scrollbars';
+	url = url + (template == 0)? '&detalle=N' : '&Template=' + template + '&detalle=N';
+	url = url + (params == 0)? '' : params;
+	console.log("URL to be called: " + url);
+	this.form.recargar.value='M';
+    this.form.action='mantenimiento';
+	void( fsubmit());
+	window.open(url,'', props);
 }

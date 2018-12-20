@@ -1,16 +1,16 @@
-/************************************************************************
-*		Author: .asolares.												*
-*		Version: 8.2018.1 												*
-*																		*
+/********************************************************************************
+*		Author: .asolares.                                              *
+*		Version: 8.2018.1                                               *
+*                                                                               *
 *		Este script contiene funciones con diferentes utilidades para   *
-*		diferentes eventos.												*
-*		Content:														*
-*			> hide_column(col_no, id_tabla)								*
-*			> tooltip(id, helpText)										*
-*			> filter_combo(filtro_id, combo_id)							*
-*			> filter_table(filtro_id, table_id, cells_array)			*
-*			> toggle_column(col_no, id_tabla)							*
-************************************************************************/
+*		diferentes eventos.                                             *
+*		Content:                                                        *
+*			> hide_column(col_no, id_tabla)                         *
+*			> tooltip(id, helpText)                                 *
+*			> filter_combo(filtro_id, combo_id)                     *
+*			> filter_table(filtro_id, table_id, cells_array)        *
+*			> toggle_column(col_no, id_tabla)                       *
+*********************************************************************************/
 
 
 /**** Variables para deteccion de browser en uso ****/
@@ -92,14 +92,14 @@ function hide_column(col_no, id_tabla) {
 
 /*
 	Esta funcion se llama desde el evento onMouseEnter de cualquier etiqueta
-	del body del html en cuestion. Mostrara un pequeño texto de ayuda luego 
+	del body del html en cuestion. Mostrara un pequeÃ±o texto de ayuda luego 
 	de cierto tiempo de que el usuairo puso el cursor sobre el elemento que
 	hizo la llamada.
 	Parametros:
 		> id: [String] Es el id del elemento al cual se le debe poner el cursor encima 
 					para que muestre el texto de ayuda.
 		> helpText: [String] Sera el texto que se mostrara al momento que entre el cursor
-								al elemento con el id señalado en el parametro anterior.
+								al elemento con el id seÃ±alado en el parametro anterior.
 */
 var doAlert = true;
 function tooltip( id, helpText ) {

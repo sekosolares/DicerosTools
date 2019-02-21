@@ -40,7 +40,7 @@ var isChrome = ( (navigator.userAgent).indexOf("Chrome") > -1 );
 
 
 // Field determines if is tab form or not. 
-var tabValue = document.querySelector("input[name*='VO_TABS']").value;
+var tabValue = (typeof document.querySelector("input[name*='VO_TABS']") !== 'undefined')? document.querySelector("input[name*='VO_TABS']").value : 0;
 var isTabForm = (tabValue == 1);
 
 /*
@@ -311,12 +311,17 @@ function move_tabs(do_it, tabs_id){
 				document.querySelectorAll(tabs_id)[i].style.position = "relative";
 				document.querySelectorAll(tabs_id)[i].style.display = "block";
 				tabstop_cont.push(document.querySelectorAll(tabs_id)[i]);
-				document.querySelectorAll(tabs_id)[i].remove();
+			}
+			console.log("Remove old tab divs...");
+			for(i = 0; i < document.querySelectorAll(tabs_id).length; i++){
+				document.querySelectorAll(tabs_id)[0].remove();
 			}
 			
+			console.log("Reposition tab divs.");
 			for(i = 0; i < tabstop_cont.length; i++){
 				$("#T11").before(tabstop_cont[i]);
 			}
+			console.log("Done move_tabs()");
 		}
 	} else {
 		(doAlert)? alert("jQuery required so move_tabs can work!") : console.warn("jQuery is not included, so functions like tooltip() or move_tabs() cannot run properly.");

@@ -1,6 +1,6 @@
 /******************************************************************************
 		Author: .asolares.
-		Version: 8.2018.1
+		Version: 2.2019.1
 
 		Este script contiene funciones con diferentes utilidades para
 		diferentes eventos.
@@ -11,6 +11,7 @@
 			> filter_table(filtro_id, table_id, cells_array)
 			> toggle_column(col_no, id_tabla)
 			> open_report(project, object, template, params)
+			> move_tabs(do_it, tabs_id)
 ********************************************************************************/
 
 
@@ -39,7 +40,7 @@ var isChrome = ( (navigator.userAgent).indexOf("Chrome") > -1 );
 
 
 // Field determines if is tab form or not. 
-var tabValue = document.querySelector("input[name*='VO_TABS']").value;
+var tabValue = (typeof document.querySelector("input[name*='VO_TABS']") !== 'undefined')? document.querySelector("input[name*='VO_TABS']").value : 0;
 var isTabForm = (tabValue == 1);
 
 /*
@@ -310,7 +311,9 @@ function move_tabs(do_it, tabs_id){
 				document.querySelectorAll(tabs_id)[i].style.position = "relative";
 				document.querySelectorAll(tabs_id)[i].style.display = "block";
 				tabstop_cont.push(document.querySelectorAll(tabs_id)[i]);
-				document.querySelectorAll(tabs_id)[i].remove();
+			}
+			for(i = 0; i < document.querySelectorAll(tabs_id).length; i++){
+				document.querySelectorAll(tabs_id)[0].remove();
 			}
 			
 			for(i = 0; i < tabstop_cont.length; i++){

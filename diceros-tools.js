@@ -1,6 +1,6 @@
 /******************************************************************************
 		Author: .asolares.
-		Version: 8.2018.1
+		Version: 2.2019.1
 
 		Este script contiene funciones con diferentes utilidades para
 		diferentes eventos.
@@ -11,35 +11,43 @@
 			> filter_table(filtro_id, table_id, cells_array)
 			> toggle_column(col_no, id_tabla)
 			> open_report(project, object, template, params)
+			> move_tabs(do_it, tabs_id)
 ********************************************************************************/
 
 
 /**** Variables para deteccion de browser en uso ****/
 
-// Opera 8.0+
-var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+// Opera
+var isOpera = ( (navigator.userAgent).indexOf("OPR") > -1 );
 
 // Firefox 1.0+
-var isFirefox = typeof InstallTrigger !== 'undefined';
+var isFirefox = ( (navigator.userAgent).indexOf("Firefox") > -1 );
 
-// Safari 3.0+ "[object HTMLElementConstructor]"
-var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification));
+// Safari
+var isSafari = ( (navigator.userAgent).indexOf("Safari") > -1 );
 
-// Internet Explorer 6-11
-var isIE = /*@cc_on!@*/false || !!document.documentMode;
+// Internet Explorer < 11
+var isIE = ( (navigator.userAgent).indexOf("IE") > -1 );
 
-// Edge 20+
-var isEdge = !isIE && !!window.StyleMedia;
+// Internet Explorer 11
+var isIE11 = ( (navigator.userAgent).indexOf("Trident") > -1 );
+
+// Edge
+var isEdge = ( (navigator.userAgent).indexOf("Edge") > -1 );
 
 // Chrome 1+
-var isChrome = !!window.chrome && !!window.chrome.webstore;
+var isChrome = ( (navigator.userAgent).indexOf("Chrome") > -1 );
 
-// Blink engine detection
-var isBlink = (isChrome || isOpera) && !!window.CSS;
+
+// Field determines if is tab form or not. 
+var tabValue = document.querySelector("input[name*='VO_TABS']").value;
+var isTabForm = (tabValue == 1);
 
 /*
 	Funcion llamada en el evento onClick de una etiqueta <th> para
 	ocultar la columna del click.
+	Version:
+		> 1.0
 	Parametros:
 		> col_no: [integer] El numero de la columna que se oculta; la numeracion
 							empieza desde 0.
@@ -96,6 +104,8 @@ function hide_column(col_no, id_tabla) {
 	del body del html en cuestion. Mostrara un pequeño texto de ayuda luego
 	de cierto tiempo de que el usuairo puso el cursor sobre el elemento que
 	hizo la llamada.
+	Version:
+		> 1.0
 	Parametros:
 		> id: [String] Es el id del elemento al cual se le debe poner el cursor encima
 					para que muestre el texto de ayuda.
@@ -122,7 +132,7 @@ function tooltip( id, helpText ) {
 		// Si el cursor permanecio adentro, se mostrara el <div> con el texto del parametro.
 		$("#tooltip"+id).delay(900).fadeIn(500);
 	} else {
-		(doAlert)? alert("jQuery required so tooltip can work!") : console.warn("jQuery is not included, so function tooltip() cannot run properly.");
+		(doAlert)? alert("jQuery required so move_tabs can work!") : console.warn("jQuery is not included, so functions like tooltip() or move_tabs() cannot run properly.");
 		doAlert = false;
 	}
 }
@@ -131,6 +141,8 @@ function tooltip( id, helpText ) {
 	Esta funcion se utiliza en el evento de onKeyUp, onKeyPress o en onKeyDown del input que servira
 	como filtro. Basado en las coincidencias del filtro en el combo, las opciones que no cumplan con
 	el filtro van a desaparecer temporalmente.
+	Version:
+		> 1.0
 	Parametros:
 		> filtro_id: [String] Es el id del input que servira como filtro del combo.
 		> combo_id: [String] Es el combo que va a ser filtrado basado en lo que se coloque en el input
@@ -160,6 +172,8 @@ function filter_combo(filtro_id, combo_id){
 /*
 	Funcion que se llama desde el evento onKeyUp, onKeyPress o en onKeyDown del input filtro. Evalua
 	si lo que esta escrito en el filtro concuerda con algun elemento de la tabla que se desea filtrar.
+	Version:
+		> 1.0
 	Parametros:
 		> filtro_id: [String] Es el id del input que se utilizara como criterio para filtrar la tabla.
 		> table_id: [String] Id de la tabla cuyos elementos seran filtrados.
@@ -218,6 +232,8 @@ function filter_table(filtro_id, table_id, cells_array){
 /*
 	Funcion llamada en el evento onClick de algun boton que permita hacer un toggle de la
 	columna especificada en el parametro col_no.
+	Version:
+		> 1.0
 	Parametros:
 		> col_no: [integer] El numero de la columna a la que se hace toggle; la numeracion
 							empieza desde 0.
@@ -261,8 +277,57 @@ function open_report(project, object, template=0, params=0){
 	url = url + (template == 0)? '&detalle=N' : '&Template=' + template + '&detalle=N';
 	url = url + (params == 0)? '' : params;
 	console.log("URL to be called: " + url);
+	
 	this.form.recargar.value='M';
-    	this.form.action='mantenimiento';
-	void( fsubmit());
+    this.form.action='mantenimiento';
+	void( fsubmit() );
 	window.open(url,'', props);
 }
+
+
+/*
+	Funcion que resuelve el problema de los forms con tabs. Mueve los tabs al lugar en el que 
+	deberian ir normalmente para no afectar el funcionamiento en los browsers Chrome, Opera,
+	Firefox y Edge.
+	Version:
+		> 1.0
+	Parametros:
+		> do_it: [boolean] Determina si debe ejecutarse la funcion o no.
+		> tabs_id: [String] Se refiere al id del o los divs que contienen los tabs, a los cuales
+				   se le dara movimiento.
+*/
+var doAlert = true;
+function move_tabs(do_it, tabs_id){
+	if(window.jQuery){
+		if(!do_it){
+			console.log("Not a tab form. Wont move any tabs.");
+		}else{
+			tabs_id = "#" + tabs_id;
+			let tabstop_cont = new Array();
+			console.log("Execute tab movement.");
+			document.querySelectorAll(tabs_id);
+			var i;
+			for(i = 0; i < document.querySelectorAll(tabs_id).length; i++){
+				document.querySelectorAll(tabs_id)[i].style.position = "relative";
+				document.querySelectorAll(tabs_id)[i].style.display = "block";
+				tabstop_cont.push(document.querySelectorAll(tabs_id)[i]);
+				document.querySelectorAll(tabs_id)[i].remove();
+			}
+			
+			for(i = 0; i < tabstop_cont.length; i++){
+				$("#T11").before(tabstop_cont[i]);
+			}
+		}
+	} else {
+		(doAlert)? alert("jQuery required so move_tabs can work!") : console.warn("jQuery is not included, so functions like tooltip() or move_tabs() cannot run properly.");
+		doAlert = false;
+	}
+}
+
+
+var do_tab_movement = isTabForm && (isChrome || isOpera || isEdge || isFirefox);
+document.addEventListener('DOMContentLoaded', function(){
+	// Al cargar la pagina, ejecutar la funcion para acomodar los tabs en caso de ser necesario.
+	move_tabs(do_tab_movement, "tabstop");
+});
+

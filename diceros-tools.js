@@ -40,7 +40,7 @@ var isChrome = ( (navigator.userAgent).indexOf("Chrome") > -1 );
 
 
 // Field determines if is tab form or not. 
-var tabValue = (typeof document.querySelector("input[name*='VO_TABS']") !== 'undefined')? document.querySelector("input[name*='VO_TABS']").value : 0;
+var tabValue = (document.querySelector("input[name*='VO_TABS']") != null)? document.querySelector("input[name*='VO_TABS']").value : 0;
 var isTabForm = (tabValue == 1);
 
 /*

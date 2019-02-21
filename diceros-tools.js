@@ -38,11 +38,6 @@ var isEdge = ( (navigator.userAgent).indexOf("Edge") > -1 );
 // Chrome 1+
 var isChrome = ( (navigator.userAgent).indexOf("Chrome") > -1 );
 
-
-// Field determines if is tab form or not. 
-var tabValue = (document.querySelector("input[name*='VO_TABS']") != null)? document.querySelector("input[name*='VO_TABS']").value : 0;
-var isTabForm = (tabValue == 1);
-
 /*
 	Funcion llamada en el evento onClick de una etiqueta <th> para
 	ocultar la columna del click.
@@ -330,8 +325,13 @@ function move_tabs(do_it, tabs_id){
 }
 
 
-var do_tab_movement = isTabForm && (isChrome || isOpera || isEdge || isFirefox);
 document.addEventListener('DOMContentLoaded', function(){
+	// Field determines if is tab form or not. 
+	var tabValue = (document.querySelector("input[name*='VO_TABS']") != null)? document.querySelector("input[name*='VO_TABS']").value : 0;
+	var isTabForm = (tabValue == 1);
+	
+	var do_tab_movement = isTabForm && (isChrome || isOpera || isEdge || isFirefox);
+	
 	// Al cargar la pagina, ejecutar la funcion para acomodar los tabs en caso de ser necesario.
 	move_tabs(do_tab_movement, "tabstop");
 });

@@ -330,7 +330,7 @@ function move_tabs(do_it, tabs_id){
 	Funcion que genera una ventana de aviso en tiempo de corrida. 
 	Una simple ventana con el mensaje que se quiere especificar.
 	Version:
-		> 1.0
+		> 1.2
 	Parametros:
 		> titulo: [String] El titulo de la nueva ventana que se abrira.
 		> msg: [String] Mensaje que se quiere colocar en el cuerpo de la nueva ventana,
@@ -351,14 +351,26 @@ function fAvisoNew( titulo, msg ){
     // Def P:
     eP.style = "font-size:1.25rem;font-family:Helvetica,Arial,sans-serif;padding:20px;";
     eP.innerText = msg;
-    // Agregar elementos:
-    eDiv.append(eH1);
-    eDiv.append(eBr);
-    eDiv.append(eBr);
-    eDiv.append(eP);
-    // Agregarlos al body para que san visibles:
-    win.body.style = "background-color:#FFFF54;";
-	win.body.append(eDiv);
+	// Agregar elementos:
+	if(isIE11 || isIE){
+		console.log("Internet Explorer detected! Using alternative methods.");
+		eDiv.appendChild(eH1);
+		eDiv.appendChild(eBr);
+		eDiv.appendChild(eBr);
+		eDiv.appendChild(eP);
+		// Agregarlos al body para que san visibles:
+		win.body.style = "background-color:#FFFF54;";
+		win.body.appendChild(eDiv);
+	}else{
+		eDiv.append(eH1);
+		eDiv.append(eBr);
+		eDiv.append(eBr);
+		eDiv.append(eP);
+		// Agregarlos al body para que san visibles:
+		win.body.style = "background-color:#FFFF54;";
+		win.body.append(eDiv);
+	}
+    
 	console.log("Se ha generado un aviso del sistema!");
 }
 

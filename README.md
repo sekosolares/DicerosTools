@@ -11,7 +11,7 @@
 - [fAvisoNew(titulo, msg)](#fAvisoNew)
 
 ## hide_column:
-    Funcion llamada en el evento onClick de una etiqueta <th> para ocultar la columna del click.
+Funcion llamada en el evento onClick de una etiqueta <th> para ocultar la columna del click.
 
 ## tooltip:
     Esta funcion se llama desde el evento onMouseEnter de cualquier etiqueta del body del html en cuestion. Mostrara un pequeño texto de ayuda luego de cierto tiempo de que el usuairo puso el cursor sobre el elemento que hizo la llamada.

@@ -12,6 +12,7 @@
 			> toggle_column(col_no, id_tabla)
 			> open_report(project, object, template, params)
 			> move_tabs(do_it, tabs_id)
+			> fAvisoNew(titulo, msg)
 ********************************************************************************/
 
 
@@ -150,7 +151,7 @@ function filter_combo(filtro_id, combo_id){
     filter = input.value.toUpperCase();
     combo = document.getElementById(combo_id);
     opt = combo.getElementsByTagName("option");
-		//Ciclo que hace el trabajo de esconder lo que no cumpla con el filtro.
+	//Ciclo que hace el trabajo de esconder lo que no cumpla con el filtro.
     for (i = 0; i < opt.length; i++) {
 			actual_opt = opt[i];
 			if (actual_opt) {
@@ -322,6 +323,43 @@ function move_tabs(do_it, tabs_id){
 		(doAlert)? alert("jQuery required so move_tabs can work!") : console.warn("jQuery is not included, so functions like tooltip() or move_tabs() cannot run properly.");
 		doAlert = false;
 	}
+}
+
+
+/*
+	Funcion que genera una ventana de aviso en tiempo de corrida. 
+	Una simple ventana con el mensaje que se quiere especificar.
+	Version:
+		> 1.0
+	Parametros:
+		> titulo: [String] El titulo de la nueva ventana que se abrira.
+		> msg: [String] Mensaje que se quiere colocar en el cuerpo de la nueva ventana,
+				al que se le puede colocar etiquetas html en el String.
+*/
+function fAvisoNew( titulo, msg ){
+    var win = window.open('', titulo, 'menubar=0,titlebar=0,width=485,height=370,left=' + window.outerWidth/3 + ',top=' + window.outerHeight/3);
+    win = win.document;
+    var eDiv = win.createElement("div");
+    var eP = win.createElement("p");
+    var eH1 = win.createElement("h1");
+    var eBr = win.createElement("br");
+	// Def DIV:
+    eDiv.style = "margin:auto;width:auto;height:auto;color:rgb(17,18,12);text-align:left;padding:30px 20px;";
+    // Def H1:
+    eH1.style = "font-size:2.25rem;font-family:Helvetica,Arial,sans-serif;margin:auto;text-align:center;border-bottom:2px solid rgb(17,18,12);";
+    eH1.innerText = titulo;
+    // Def P:
+    eP.style = "font-size:1.25rem;font-family:Helvetica,Arial,sans-serif;padding:20px;";
+    eP.innerText = msg;
+    // Agregar elementos:
+    eDiv.append(eH1);
+    eDiv.append(eBr);
+    eDiv.append(eBr);
+    eDiv.append(eP);
+    // Agregarlos al body para que san visibles:
+    win.body.style = "background-color:#FFFF54;";
+	win.body.append(eDiv);
+	console.log("Se ha generado un aviso del sistema!");
 }
 
 

@@ -1,4 +1,4 @@
-# Tools for Diceros System
+# Toolkit for Diceros to simplify tasks.
 
 ### Content:
 - [hide_column](#hide_column)

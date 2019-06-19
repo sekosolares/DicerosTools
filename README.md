@@ -2,13 +2,13 @@
 
 ### Content:
 - [hide_column(col_no,id_tabla)](#hide_column)
-- [tooltip](#tooltip)
-- [filter_combo](#filter_combo)
-- [filter_table](#filter_table)
-- [toggle_column](#toggle_column)
-- [open_report](#open_report)
-- [move_tabs](#move_tabs)
-- [fAvisoNew](#fAvisoNew)
+- [tooltip(id, helpText)](#tooltip)
+- [filter_combo(filtro_id, combo_id)](#filter_combo)
+- [filter_table(filtro_id, table_id, cells_array)](#filter_table)
+- [toggle_column(col_no, id_tabla)](#toggle_column)
+- [open_report(project, object, template, params)](#open_report)
+- [move_tabs(do_it, tabs_id)](#move_tabs)
+- [fAvisoNew(titulo, msg)](#fAvisoNew)
 
 ## hide_column:
 Funcion llamada en el evento onClick de una etiqueta ```<th>``` para ocultar la columna del click.

@@ -352,24 +352,13 @@ function fAvisoNew( titulo, msg ){
     eP.style = "font-size:1.25rem;font-family:Helvetica,Arial,sans-serif;padding:20px;";
     eP.innerText = msg;
 	// Agregar elementos:
-	if(isIE11 || isIE){
-		console.log("Internet Explorer detected! Using alternative methods.");
-		eDiv.appendChild(eH1);
-		eDiv.appendChild(eBr);
-		eDiv.appendChild(eBr);
-		eDiv.appendChild(eP);
-		// Agregarlos al body para que san visibles:
-		win.body.style = "background-color:#FFFF54;";
-		win.body.appendChild(eDiv);
-	}else{
-		eDiv.append(eH1);
-		eDiv.append(eBr);
-		eDiv.append(eBr);
-		eDiv.append(eP);
-		// Agregarlos al body para que san visibles:
-		win.body.style = "background-color:#FFFF54;";
-		win.body.append(eDiv);
-	}
+	eDiv.appendChild(eH1);
+	eDiv.appendChild(eBr);
+	eDiv.appendChild(eBr);
+	eDiv.appendChild(eP);
+	// Agregarlos al body para que san visibles:
+	win.body.style = "background-color:#FFFF54;";
+	win.body.appendChild(eDiv);
     
 	console.log("Se ha generado un aviso del sistema!");
 }

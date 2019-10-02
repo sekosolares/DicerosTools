@@ -1,6 +1,6 @@
 /******************************************************************************
 		Author: .asolares.
-		Version: 6.2019.1
+		Version: 10.2019.1
 
 		Este script contiene funciones con diferentes utilidades para
 		diferentes eventos.
@@ -13,6 +13,8 @@
 			> open_report(project, object, template, params)
 			> move_tabs(do_it, tabs_id)
 			> fAvisoNew(titulo, msg)
+			> formatNumber(num)
+			> totalizar(id_tabla, celdas, clase)
 ********************************************************************************/
 
 
@@ -317,7 +319,7 @@ function move_tabs(do_it, tabs_id){
 			for(i = 0; i < tabstop_cont.length; i++){
 				$("#T11").before(tabstop_cont[i]);
 			}
-			console.log("Done move_tabs()");
+			console.info("Done move_tabs()");
 		}
 	} else {
 		(doAlert)? alert("jQuery required so move_tabs can work!") : console.warn("jQuery is not included, so functions like tooltip() or move_tabs() cannot run properly.");
@@ -363,6 +365,89 @@ function fAvisoNew( titulo, msg ){
 	console.log("Se ha generado un aviso del sistema!");
 }
 
+/*
+	Esta funcion retorna el numero enviado como parametro con un formato de 
+	numero como currency. (e.g. 123,456,789.98).
+	Version:
+		> 1.0
+	Parametro:
+		> num: [number] Cualquier numero que se quiera formatear.
+*/
+function formatNumber(num) {
+    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+}
+
+
+/*
+	Funcion que toma una tabla y totaliza las columnas que se especifiquen en 
+	el array de celdas el cual empieza desde indice 0.
+	Version:
+		> 1.0
+	Parametros:
+		> id_tabla: [String] El string que representa el id de la tabla a la que
+					se quiere agregar totales.
+		> celdas: [Array] Un array que contiene el numero de las columnas que se deben
+					totalizar; empezando desde cero. (e.g. [1, 3] totaliza la columna 2 y 4
+					de la tabla especificada en el id_tabla).
+		> clase: [String] [opcional] Especifica el nombre de la clase que deberia tener el tag <tr>
+					que contiene los totales.
+*/
+function totalizar(id_tabla, celdas, clase = "noclass"){
+    let posiciones = celdas;
+    let tabla = document.getElementById(id_tabla); // Tabla a totalizar
+    let filas = tabla.getElementsByTagName("tr"); // Filas de tabla
+    let valores = []; // Valores de los totales
+    
+    let filaTotal = document.createElement("tr");
+	filaTotal.classList.add(clase); // parametro clase
+	
+	console.info(`Recibidos todos los parametros. tabla=${id_tabla} | celdas=${celdas} | clase=${clase}`);
+    
+    
+    for(let i = 0; i < posiciones.length; i++){
+        valores.push(0);
+    }
+	
+	console.debug(`Valores vs Posiciones: vals: ${valores} | pos: ${posiciones}`);
+	
+    for(var i = 0; i < filas.length; i++){
+        let filaActual = filas[i];
+        let celdas = filaActual.getElementsByTagName("td");
+    
+        if( celdas.length == 0 )
+            continue;
+    
+        for(let j = 0; j < posiciones.length; j++){
+            let posAct = posiciones[j];
+            posAct *= 1;
+            let valAct = celdas[posAct].innerHTML;
+            valAct = ( valAct.replace(/,/g, '') ) * 1;
+            valores[j] = valores[j] + valAct;
+        }
+    }
+    
+    
+    let tmpFila = filas[filas.length - 1];
+    let cantCeldas = tmpFila.getElementsByTagName("td");
+    
+    for(let k = 0; k < cantCeldas.length; k++){
+        let tmpCell = document.createElement("td");
+        tmpCell.style.textAlign = 'right';
+        filaTotal.append(tmpCell);
+    }
+    
+    let celdasTotal = filaTotal.getElementsByTagName("td");
+    celdasTotal[0].innerHTML = "TOTAL";
+    
+    for(let l = 0; l < posiciones.length; l++){
+        let posAct = posiciones[l];
+        posAct *= 1;
+        celdasTotal[posAct].innerHTML = (valores[l].toFixed(2)).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    }
+    
+	filas[filas.length - 1].parentElement.append(filaTotal);
+	console.log(`Finalizado el proceso de totalizar. Fila total: ${filaTotal}`);
+}
 
 document.addEventListener('DOMContentLoaded', function(){
 	// Field determines if is tab form or not. 

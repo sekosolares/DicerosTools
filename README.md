@@ -1,6 +1,15 @@
 # Toolkit for Diceros to simplify tasks.
 
-### Content:
+## Pre-requisitos:
+- [jQuery V3.X](https://jquery.com/)
+
+
+## Como instalar:
+Hacer copy / paste del codigo Javascript en este repositorio.
+> Se esta trabajando en una mejor manera de distribuir este toolkit...
+
+
+### Functions:
 - [hide_column(col_no,id_tabla)](#hide_column)
 - [tooltip(id, helpText)](#tooltip)
 - [filter_combo(filtro_id, combo_id)](#filter_combo)

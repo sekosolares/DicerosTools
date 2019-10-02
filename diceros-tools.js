@@ -1,6 +1,6 @@
 /******************************************************************************
 		Author: .asolares.
-		Version: 10.2019.1
+		Version: 10.2019.3
 
 		Este script contiene funciones con diferentes utilidades para
 		diferentes eventos.
@@ -382,26 +382,26 @@ function formatNumber(num) {
 	Funcion que toma una tabla y totaliza las columnas que se especifiquen en 
 	el array de celdas el cual empieza desde indice 0.
 	Version:
-		> 1.0
+		> 1.2
 	Parametros:
-		> id_tabla: [String] El string que representa el id de la tabla a la que
+		> obj_tabla: [Object] El object que representa la tabla a la que
 					se quiere agregar totales.
 		> celdas: [Array] Un array que contiene el numero de las columnas que se deben
 					totalizar; empezando desde cero. (e.g. [1, 3] totaliza la columna 2 y 4
-					de la tabla especificada en el id_tabla).
+					de la tabla especificada en el obj_tabla).
 		> clase: [String] [opcional] Especifica el nombre de la clase que deberia tener el tag <tr>
 					que contiene los totales.
 */
-function totalizar(id_tabla, celdas, clase = "noclass"){
+function totalizar(obj_tabla, celdas, clase = "noclass"){
     let posiciones = celdas;
-    let tabla = document.getElementById(id_tabla); // Tabla a totalizar
+    let tabla = obj_tabla; // Tabla a totalizar
     let filas = tabla.getElementsByTagName("tr"); // Filas de tabla
     let valores = []; // Valores de los totales
     
     let filaTotal = document.createElement("tr");
 	filaTotal.classList.add(clase); // parametro clase
 	
-	console.info(`Recibidos todos los parametros. tabla=${id_tabla} | celdas=${celdas} | clase=${clase}`);
+	console.info(`Recibidos todos los parametros. tabla=${obj_tabla} | celdas=${celdas} | clase=${clase}`);
     
     
     for(let i = 0; i < posiciones.length; i++){
@@ -427,16 +427,21 @@ function totalizar(id_tabla, celdas, clase = "noclass"){
     }
     
     
-    let tmpFila = filas[filas.length - 1];
+	let tmpFila = filas[filas.length - 1];
     let cantCeldas = tmpFila.getElementsByTagName("td");
-    
+	
     for(let k = 0; k < cantCeldas.length; k++){
         let tmpCell = document.createElement("td");
         tmpCell.style.textAlign = 'right';
         filaTotal.append(tmpCell);
     }
     
-    let celdasTotal = filaTotal.getElementsByTagName("td");
+	let celdasTotal = filaTotal.getElementsByTagName("td");
+	// breakpoint si no hay celdas porque solo hay encabezados en la tabla.
+	if( celdasTotal.length == 0 || celdasTotal === undefined ){
+		console.log(`Finalizado el proceso de totalizar. Fila total: ${filaTotal}`);
+		return;
+	}
     celdasTotal[0].innerHTML = "TOTAL";
     
     for(let l = 0; l < posiciones.length; l++){

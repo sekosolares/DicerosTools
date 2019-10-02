@@ -19,7 +19,7 @@ Hacer copy / paste del codigo Javascript en este repositorio.
 - [move_tabs(do_it, tabs_id)](#move_tabs)
 - [fAvisoNew(titulo, msg)](#fAvisoNew)
 - [formatNumber(num)](#formatNumber)
-- [totalizar(id_tabla, celdas, clase)](#totalizar)
+- [totalizar(obj_tabla, celdas, clase)](#totalizar)
 
 
 ## hide_column:
@@ -100,6 +100,6 @@ Parametro:
 Funcion que toma una tabla y totaliza las columnas que se especifiquen en el array de celdas el cual empieza desde indice 0.
 
 Parametros:
-- **id_tabla**: *String* El string que representa el id de la tabla a la que se quiere agregar totales.
-- **celdas**: *Array* Un array que contiene el numero de las columnas que se deben totalizar; empezando desde cero. (e.g. [1, 3] totaliza la columna 2 y 4 de la tabla especificada en el id_tabla).
+- **obj_tabla**: *Object* El object que representa la tabla a la que se quiere agregar totales.
+- **celdas**: *Array* Un array que contiene el numero de las columnas que se deben totalizar; empezando desde cero. (e.g. [1, 3] totaliza la columna 2 y 4 de la tabla especificada en el obj_tabla).
 - **clase**: *String* *opcional* Especifica el nombre de la clase que deberia tener el tag ```<tr>``` que contiene los totales.

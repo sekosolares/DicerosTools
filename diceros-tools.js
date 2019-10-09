@@ -461,7 +461,7 @@ function totalizarTabla(obj_tabla, celdas, clase = "noclass"){
 	 en especifico. Llamando a una ventana que contiene la informacion
 	 solicitada.
 	Version:
-		> 1.0
+		> 1.2
 	Parametros:
 		> id_field: [String | Array] Si es String, representa el id del campo al que
 					se le agrega el buscador y al que se le insertara el valor. Si es un
@@ -507,7 +507,8 @@ function addBrowser(id_field, proyecto, objeto, where, imgFile = "fa-search.png"
             color: black;
             cursor: pointer;
             margin:0px;
-            align-content: start;
+			align-content: start;
+			display: inline-block;
         }`;
         let styleElem = document.createElement("style");
         styleElem.type = "text/css";
@@ -538,7 +539,8 @@ function addBrowser(id_field, proyecto, objeto, where, imgFile = "fa-search.png"
             color: black;
             cursor: pointer;
             margin:0px;
-            align-content: start;
+			align-content: start;
+			display: inline-block;
         }`;
         let styleElem = document.createElement("style");
         styleElem.type = "text/css";
@@ -575,9 +577,9 @@ function addBrowser(id_field, proyecto, objeto, where, imgFile = "fa-search.png"
     innerDiv.addEventListener('mouseenter', function(){
         tooltip(this.id, 'Hacer click para iniciar dialogo de búsqueda...');
     });
-    var sParam= "rbplus?p="+proyecto+"&o="+objeto+"&w="+where;
+    
     innerDiv.addEventListener('click', function(){
-        window.open( sParam + (isObject) ? "&VACAMPOS=" + id_field.toString():'&VACAMPOS=' + id_field,'', 'menubar=yes,resizable=yes,toolbar=yes,titlebar=yes,scrollbars=yes,left=300,top=150,width=1100,height=575');
+        window.open("rbplus?p=" + proyecto + "&o=" + objeto + "&w=" + where + "&VACAMPOS=" + id_field.toString(),'', 'menubar=yes,resizable=yes,toolbar=yes,titlebar=yes,scrollbars=yes,left=300,top=150,width=1100,height=575');
         jQuery(document.querySelectorAll("div.fadedBehind")[0]).show(950);
         jQuery(this).parent().hide(950);
     });

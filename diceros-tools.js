@@ -1,6 +1,6 @@
 /******************************************************************************
 		Author: .asolares.
-		Version: 10.2019.4
+		Version: 1.0.0
 
 		Este script contiene funciones con diferentes utilidades para
 		diferentes eventos.
@@ -482,7 +482,38 @@ function addBrowser(id_field, proyecto, objeto, where, imgFile = "fa-search.png"
     let headElem = document.getElementsByTagName("head")[0];
     let styleTag = headElem.getElementsByTagName("style")[0];
 
-    if( styleTag.innerHTML.search("fadedBehind") == -1 ){
+    if( styleTag === undefined ){
+        let cssText = `div.fadedBehind {
+            background-color:#000;
+            opacity:0.5;
+            position:fixed;
+            display:none;
+            width:100%;
+            height:100%;
+            z-index:9999;
+            cursor:progress;
+            top:0;
+            left:0;
+            right:0;
+            bottom:0;
+            text-align:center;
+            padding-top:300px;
+        }
+        div.maxi{
+            background-color: rgba(0, 0, 0, 0);
+            padding-bottom: 0px;
+            text-align: center;
+            font-size: 1.5em;
+            color: black;
+            cursor: pointer;
+            margin:0px;
+            align-content: start;
+        }`;
+        let styleElem = document.createElement("style");
+        styleElem.type = "text/css";
+        styleElem.appendChild(document.createTextNode(cssText));
+        headElem.appendChild(styleElem);
+    }else if( styleTag.innerHTML.search("fadedBehind") == -1 ){
         let cssText = `div.fadedBehind {
             background-color:#000;
             opacity:0.5;
@@ -544,10 +575,10 @@ function addBrowser(id_field, proyecto, objeto, where, imgFile = "fa-search.png"
     innerDiv.addEventListener('mouseenter', function(){
         tooltip(this.id, 'Hacer click para iniciar dialogo de búsqueda...');
     });
-    let sParam= "rbplus?p="+proyecto+"&o="+objeto+"&w="+where;
+    var sParam= "rbplus?p="+proyecto+"&o="+objeto+"&w="+where;
     innerDiv.addEventListener('click', function(){
         window.open( sParam + (isObject) ? "&VACAMPOS=" + id_field.toString():'&VACAMPOS=' + id_field,'', 'menubar=yes,resizable=yes,toolbar=yes,titlebar=yes,scrollbars=yes,left=300,top=150,width=1100,height=575');
-        jQuery("div.fadedBehind")[0].show();
+        jQuery(document.querySelectorAll("div.fadedBehind")[0]).show(950);
         jQuery(this).parent().hide(950);
     });
 

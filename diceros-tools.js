@@ -1,6 +1,6 @@
 /******************************************************************************
 		Author: .asolares.
-		Version: 10.2019.3
+		Version: 10.2019.4
 
 		Este script contiene funciones con diferentes utilidades para
 		diferentes eventos.
@@ -14,7 +14,8 @@
 			> move_tabs(do_it, tabs_id)
 			> fAvisoNew(titulo, msg)
 			> formatNumber(num)
-			> totalizar(id_tabla, celdas, clase)
+			> totalizarTabla(id_tabla, celdas, clase)
+			> addBrowser(id_field, proyecto, objeto, where, imgFile)
 ********************************************************************************/
 
 
@@ -382,7 +383,7 @@ function formatNumber(num) {
 	Funcion que toma una tabla y totaliza las columnas que se especifiquen en 
 	el array de celdas el cual empieza desde indice 0.
 	Version:
-		> 1.2
+		> 1.3
 	Parametros:
 		> obj_tabla: [Object] El object que representa la tabla a la que
 					se quiere agregar totales.
@@ -392,7 +393,7 @@ function formatNumber(num) {
 		> clase: [String] [opcional] Especifica el nombre de la clase que deberia tener el tag <tr>
 					que contiene los totales.
 */
-function totalizar(obj_tabla, celdas, clase = "noclass"){
+function totalizarTabla(obj_tabla, celdas, clase = "noclass"){
     let posiciones = celdas;
     let tabla = obj_tabla; // Tabla a totalizar
     let filas = tabla.getElementsByTagName("tr"); // Filas de tabla
@@ -452,6 +453,113 @@ function totalizar(obj_tabla, celdas, clase = "noclass"){
     
 	filas[filas.length - 1].parentElement.append(filaTotal);
 	console.log(`Finalizado el proceso de totalizar. Fila total: ${filaTotal}`);
+}
+
+
+/* 
+	Con esta funcion se agrega la funcionalidad de buscador a un campo
+	 en especifico. Llamando a una ventana que contiene la informacion
+	 solicitada.
+	Version:
+		> 1.0
+	Parametros:
+		> id_field: [String | Array] Si es String, representa el id del campo al que
+					se le agrega el buscador y al que se le insertara el valor. Si es un
+					array, el primer elemento debe ser el id del campo al que se le 
+					agregara el buscador y los elementos que siguen, son en caso de que 
+					se desee insertar otros datos en otros campos. (e.g. ["CLIENTE", "NIT"] 
+					insertara un valor tanto en el id de CLIENTE como en el de NIT).
+		> proyecto: [number] Representa el numero de proyecto en el que se encuentra el 
+					reporte que sirve como dialogo.
+		> objeto: [number] Es el objeto dentro del proyecto especificado que corresponde 
+					al reporte.
+		> where: [String] Corresponde a la sentencia Where que se incluye en el SQL del 
+					reporte que sirve como dialogo.
+		> imgFile: [String] [opcional] Es la ruta de la imagen que servira para representar 
+					la accion de dialogo de busqueda.
+*/
+function addBrowser(id_field, proyecto, objeto, where, imgFile = "fa-search.png"){
+    let headElem = document.getElementsByTagName("head")[0];
+    let styleTag = headElem.getElementsByTagName("style")[0];
+
+    if( styleTag.innerHTML.search("fadedBehind") == -1 ){
+        let cssText = `div.fadedBehind {
+            background-color:#000;
+            opacity:0.5;
+            position:fixed;
+            display:none;
+            width:100%;
+            height:100%;
+            z-index:9999;
+            cursor:progress;
+            top:0;
+            left:0;
+            right:0;
+            bottom:0;
+            text-align:center;
+            padding-top:300px;
+        }
+        div.maxi{
+            background-color: rgba(0, 0, 0, 0);
+            padding-bottom: 0px;
+            text-align: center;
+            font-size: 1.5em;
+            color: black;
+            cursor: pointer;
+            margin:0px;
+            align-content: start;
+        }`;
+        let styleElem = document.createElement("style");
+        styleElem.type = "text/css";
+        styleElem.appendChild(document.createTextNode(cssText));
+        headElem.appendChild(styleElem);
+    }
+    let isObject = (typeof id_field == "object");
+
+    // Campo que tendra busqueda
+    if( !isObject ){
+        var refField = id_field;
+        var searchField = document.getElementById(refField);
+    }else{
+        var refField = id_field[0];
+        var searchField = document.getElementById(refField);
+    }
+
+    // overlay listo para mostrar
+    if(document.getElementsByClassName("fadedBehind").length == 0){
+        let overlay = document.createElement("div");
+        let body = document.getElementsByTagName("body")[0];
+        overlay.classList.add("fadedBehind");
+        body.append(overlay);
+    }
+    
+    // Creando el elemento de busqueda
+    let browserDiv = document.createElement("div");
+    browserDiv.classList.add("maxi");
+    browserDiv.id = "busc" + refField;
+
+    // Inner div creado
+    let innerDiv = document.createElement("div");
+    innerDiv.id = "inBusc" + refField;
+    innerDiv.addEventListener('mouseenter', function(){
+        tooltip(this.id, 'Hacer click para iniciar dialogo de búsqueda...');
+    });
+    let sParam= "rbplus?p="+proyecto+"&o="+objeto+"&w="+where;
+    innerDiv.addEventListener('click', function(){
+        window.open( sParam + (isObject) ? "&VACAMPOS=" + id_field.toString():'&VACAMPOS=' + id_field,'', 'menubar=yes,resizable=yes,toolbar=yes,titlebar=yes,scrollbars=yes,left=300,top=150,width=1100,height=575');
+        jQuery("div.fadedBehind")[0].show();
+        jQuery(this).parent().hide(950);
+    });
+
+    // Imagen de lupita
+    let lupita = document.createElement("img");
+    lupita.src = imgFile; // "fa-search.png"
+    lupita.alt = "Busqueda";
+
+    // Colocando el search en la pantalla
+    innerDiv.append(lupita);
+    browserDiv.append(innerDiv);
+    searchField.parentElement.append(browserDiv);
 }
 
 document.addEventListener('DOMContentLoaded', function(){

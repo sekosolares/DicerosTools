@@ -19,7 +19,8 @@ Hacer copy / paste del codigo Javascript en este repositorio.
 - [move_tabs(do_it, tabs_id)](#move_tabs)
 - [fAvisoNew(titulo, msg)](#fAvisoNew)
 - [formatNumber(num)](#formatNumber)
-- [totalizar(obj_tabla, celdas, clase)](#totalizar)
+- [totalizarTabla(obj_tabla, celdas, clase)](#totalizarTabla)
+- [addBrowser(id_field, proyecto, objeto, where, imgFile)](#addBrowser)
 
 
 ## hide_column:
@@ -96,10 +97,21 @@ Parametro:
 - **num**: *number* Cualquier numero que se quiera formatear.
 
 
-## totalizar:
+## totalizarTabla:
 Funcion que toma una tabla y totaliza las columnas que se especifiquen en el array de celdas el cual empieza desde indice 0.
 
 Parametros:
 - **obj_tabla**: *Object* El object que representa la tabla a la que se quiere agregar totales.
 - **celdas**: *Array* Un array que contiene el numero de las columnas que se deben totalizar; empezando desde cero. (e.g. [1, 3] totaliza la columna 2 y 4 de la tabla especificada en el obj_tabla).
 - **clase**: *String* *opcional* Especifica el nombre de la clase que deberia tener el tag ```<tr>``` que contiene los totales.
+
+
+## addBrowser:
+Con esta funcion se agrega la funcionalidad de buscador a un campo en especifico. Llamando a una ventana que contiene la informacion solicitada.
+
+Parametros:
+- **id_field**: *String | Array* Si es String, representa el id del campo al que se le agrega el buscador y al que se le insertara el valor. Si es un array, el primer elemento debe ser el id del campo al que se le agregara el buscador y los elementos que siguen, son en caso de que  se desee insertar otros datos en otros campos. (e.g. ["CLIENTE", "NIT"] insertara un valor tanto en el id de CLIENTE como en el de NIT).
+- **proyecto**: *number* Representa el numero de proyecto en el que se encuentra el reporte que sirve como dialogo.
+- **objeto**: *number* Es el objeto dentro del proyecto especificado que corresponde al reporte.
+- **where**: *String* Corresponde a la sentencia Where que se incluye en el SQL del reporte que sirve como dialogo.
+- **imgFile**: *String* *opcional* Es la ruta de la imagen que servira para representar la accion de dialogo de busqueda.

@@ -5,13 +5,13 @@
 
 
 ## Como instalar:
-Sencillamente hay que copiar y pegar este codigo para incluir DicerosTools en tu html:
+Sencillamente hay que copiar y pegar este codigo para incluir DicerosTools en el html:
 
-```<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/capulusnoctis/DicerosTools@1.0.0/diceros-tools.js"></script>```
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/capulusnoctis/DicerosTools@1.0.0/diceros-tools.js"></script>
 
 o bien:
 
-```<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/capulusnoctis/DicerosTools@1.0.0/diceros-tools.min.js"></script>```
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/capulusnoctis/DicerosTools@1.0.0/diceros-tools.min.js"></script>
 
 para la version minificada.
 
@@ -33,9 +33,11 @@ para la version minificada.
 ## hide_column:
 Funcion llamada en el evento onClick de una etiqueta ```<th>``` para ocultar la columna del click.
 
-Parametros:
+**Parametros**:
 - **col_no**: *integer* El numero de la columna que se oculta; la numeracion empieza desde 0.
 - **id_tabla**: *String* Indica el id de la tabla que tendra esta accion de ocultar filas.
+
+**Ejemplo**:
 
 
 ## tooltip:
@@ -117,7 +119,7 @@ Parametros:
 Con esta funcion se agrega la funcionalidad de buscador a un campo en especifico. Llamando a una ventana que contiene la informacion solicitada.
 
 Parametros:
-- **id_field**: *String* *|* *Array* Si es String, representa el id del campo al que se le agrega el buscador y al que se le insertara el valor. Si es un array, el primer elemento debe ser el id del campo al que se le agregara el buscador y los elementos que siguen, son en caso de que  se desee insertar otros datos en otros campos. (e.g. ["CLIENTE", "NIT"] insertara un valor tanto en el id de CLIENTE como en el de NIT).
+- **id_field**: *String* ```|``` *Array* Si es String, representa el id del campo al que se le agrega el buscador y al que se le insertara el valor. Si es un array, el primer elemento debe ser el id del campo al que se le agregara el buscador y los elementos que siguen, son en caso de que  se desee insertar otros datos en otros campos. (e.g. ["CLIENTE", "NIT"] insertara un valor tanto en el id de CLIENTE como en el de NIT).
 - **proyecto**: *number* Representa el numero de proyecto en el que se encuentra el reporte que sirve como dialogo.
 - **objeto**: *number* Es el objeto dentro del proyecto especificado que corresponde al reporte.
 - **where**: *String* Corresponde a la sentencia Where que se incluye en el SQL del reporte que sirve como dialogo.

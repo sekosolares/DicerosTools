@@ -17,20 +17,20 @@ para la version minificada.
 
 
 ### Functions:
-- [hide_column(col_no,id_tabla)](#hide_column)
-- [tooltip(id,helpText)](#tooltip)
-- [filter_combo(filtro_id,combo_id)](#filter_combo)
-- [filter_table(filtro_id,table_id,cells_array)](#filter_table)
-- [toggle_column(col_no,id_tabla)](#toggle_column)
-- [open_report(project,object,template,params)](#open_report)
-- [move_tabs(do_it,tabs_id)](#move_tabs)
-- [fAvisoNew(titulo,msg)](#fAvisoNew)
-- [formatNumber(num)](#formatNumber)
-- [totalizarTabla(obj_tabla,celdas,clase)](#totalizarTabla)
-- [addBrowser(id_field,proyecto,objeto,where,imgFile)](#addBrowser)
+- [hide_column](#hide_column(col_no,id_tabla))
+- [tooltip](#tooltip(id,helpText))
+- [filter_combo](#filter_combo(filtro_id,combo_id))
+- [filter_table](#filter_table(filtro_id,table_id,cells_array))
+- [toggle_column](#toggle_column(col_no,id_tabla))
+- [open_report](#open_report(project,object,template,params))
+- [move_tabs](#move_tabs(do_it,tabs_id))
+- [fAvisoNew](#fAvisoNew(titulo,msg))
+- [formatNumber](#formatNumber(num))
+- [totalizarTabla](#totalizarTabla(obj_tabla,celdas,clase))
+- [addBrowser](#addBrowser(id_field,proyecto,objeto,where,imgFile))
 
 
-## hide_column
+## hide_column(col_no,id_tabla)
 Funcion llamada en el evento onClick de una etiqueta ```<th>``` para ocultar la columna del click.
 
 **Parametros**:
@@ -40,7 +40,7 @@ Funcion llamada en el evento onClick de una etiqueta ```<th>``` para ocultar la 
 **Ejemplo**:
 
 
-## tooltip
+## tooltip(id,helpText)
 Esta funcion se llama desde el evento onMouseEnter de cualquier etiqueta del body del html en cuestion. Mostrara un pequeño texto de ayuda luego de cierto tiempo de que el usuairo puso el cursor sobre el elemento que hizo la llamada.
 
 Parametros:
@@ -48,7 +48,7 @@ Parametros:
 - **helpText**: *String* Sera el texto que se mostrara al momento que entre el cursor al elemento con el id señalado en el parametro anterior.
 
 
-## filter_combo
+## filter_combo(filtro_id,combo_id)
 Esta funcion se utiliza en el evento de onKeyUp, onKeyPress o en onKeyDown del input que servira como filtro. Basado en las coincidencias del filtro en el combo, las opciones que no cumplan con	el filtro van a desaparecer temporalmente.
 
 Parametros:
@@ -56,7 +56,7 @@ Parametros:
 - **combo_id**: *String* Es el combo que va a ser filtrado basado en lo que se coloque en el input de filtro.
 
 
-## filter_table
+## filter_table(filtro_id,table_id,cells_array)
 Funcion que se llama desde el evento onKeyUp, onKeyPress o en onKeyDown del input filtro. Evalua si lo que esta escrito en el filtro concuerda con algun elemento de la tabla que se desea filtrar.
 
 Parametros:
@@ -65,7 +65,7 @@ Parametros:
 - **cells_array**: *Array* Este array contiene los numeros de las columnas que seran filtradas, iniciando desde cero. (e.g. [0, 2, 3] filtra la primera, tercera y cuarta columna. [ 0 ] solo filtra la primera columna).
 
 
-## toggle_column
+## toggle_column(col_no,id_tabla)
 Funcion llamada en el evento onClick de algun boton que permita hacer un toggle de la columna especificada en el parametro col_no.
 
 Parametros:
@@ -73,7 +73,7 @@ Parametros:
 - **id_tabla**: *String* Indica el id de la tabla que tendra esta accion de ocultar y mostrar columnas.
 
 
-## open_report
+## open_report(project,object,template,params)
 Funcion pensada para que sea la que se llame desde los botones de impresion de reportes.
 
 Parametros:
@@ -83,7 +83,7 @@ Parametros:
 - **params**: *String* *opcional* En el caso de que haya que llenar parametros del lado del objeto en donde esta el reporte, se debe especificar aqui. e.g. "&VACAMPO=1&VACAMPO2=2"
 
 
-## move_tabs
+## move_tabs(do_it,tabs_id)
 Funcion que resuelve el problema de los forms con tabs. Mueve los tabs al lugar en el que deberian ir normalmente para no afectar el funcionamiento en los browsers Chrome, Opera, Firefox y Edge.
 
 Parametros:
@@ -91,7 +91,7 @@ Parametros:
 - **tabs_id**: *String* Se refiere al id del o los divs que contienen los tabs, a los cuales se le dara movimiento.
 
 
-## fAvisoNew
+## fAvisoNew(titulo,msg)
 Funcion que genera una ventana de aviso en tiempo de corrida. Una simple ventana con el mensaje que se quiere especificar.
 
 Parametros:
@@ -99,14 +99,14 @@ Parametros:
 - **msg**: *String* Mensaje que se quiere colocar en el cuerpo de la nueva ventana, al que se le puede colocar etiquetas html en el String.
 
 
-## formatNumber
+## formatNumber(num)
 Esta funcion retorna el numero enviado como parametro con un formato de numero como currency. (e.g. 123,456,789.98).
 
 Parametro:
 - **num**: *number* Cualquier numero que se quiera formatear.
 
 
-## totalizarTabla
+## totalizarTabla(obj_tabla,celdas,clase)
 Funcion que toma una tabla y totaliza las columnas que se especifiquen en el array de celdas el cual empieza desde indice 0.
 
 Parametros:
@@ -115,7 +115,7 @@ Parametros:
 - **clase**: *String* *opcional* Especifica el nombre de la clase que deberia tener el tag ```<tr>``` que contiene los totales.
 
 
-## addBrowser
+## addBrowser(id_field,proyecto,objeto,where,imgFile)
 Con esta funcion se agrega la funcionalidad de buscador a un campo en especifico. Llamando a una ventana que contiene la informacion solicitada.
 
 Parametros:

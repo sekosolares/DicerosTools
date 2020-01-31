@@ -1,63 +1,159 @@
-# Toolkit for Diceros to simplify tasks.
+# DicerosTools js
 
 ## Pre-requisitos:
 - [jQuery V3.X](https://jquery.com/)
 
+---
 
-## Como instalar:
-Sencillamente hay que copiar y pegar este codigo para incluir DicerosTools en el html:
+## Cómo instalar:
+Sencillamente hay que copiar y pegar este código para incluir DicerosTools en el *html*:
 
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/capulusnoctis/DicerosTools@1.0.0/diceros-tools.js"></script>
+```html
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/capulusnoctis/DicerosTools@1.0.0/diceros-tools.js"></script>
+```
 
 o bien:
 
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/capulusnoctis/DicerosTools@1.0.0/diceros-tools.min.js"></script>
+```html
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/capulusnoctis/DicerosTools@1.0.0/diceros-tools.min.js"></script>
+```
 
 para la version minificada.
 
+---
 
-### Functions:
-- [hide_column](##hide_column(col_no,id_tabla))
-- [tooltip](##tooltip(id,helpText))
-- [filter_combo](#filter_combo(filtro_id,combo_id))
-- [filter_table](#filter_table(filtro_id,table_id,cells_array))
-- [toggle_column](#toggle_column(col_no,id_tabla))
-- [open_report](#open_report(project,object,template,params))
-- [move_tabs](#move_tabs(do_it,tabs_id))
-- [fAvisoNew](#fAvisoNew(titulo,msg))
-- [formatNumber](#formatNumber(num))
-- [totalizarTabla](#totalizarTabla(obj_tabla,celdas,clase))
-- [addBrowser](#addBrowser(id_field,proyecto,objeto,where,imgFile))
+## Funciones:
+
+- [hide_column](#hide_column)
+- [tooltip](#tooltip)
+- [filter_combo](#filter_combo)
+- [filter_table](#filter_table)
+- [toggle_column](#toggle_column)
+- [open_report](#open_report)
+- [move_tabs](#move_tabs)
+- [fAvisoNew](#fAvisoNew)
+- [formatNumber](#formatNumber)
+- [totalizarTabla](#totalizarTabla)
+- [addBrowser](#addBrowser)
 
 
-## hide_column(col_no,id_tabla)
-Funcion llamada en el evento onClick de una etiqueta ```<th>``` para ocultar la columna del click.
+## hide_column
+
+Funcion llamada en el evento onClick de una etiqueta `<th>` para ocultar la columna del click.
+
+**Función**:
+
+```javascript
+hide_column(col_no,id_tabla)
+```
+
 
 **Parametros**:
+
 - **col_no**: *integer* El numero de la columna que se oculta; la numeracion empieza desde 0.
 - **id_tabla**: *String* Indica el id de la tabla que tendra esta accion de ocultar filas.
 
+
 **Ejemplo**:
 
+El siguiente ejemplo hará que se oculte la columna de **Código** cuando al encabezado (`<th>`) se le haga click.
 
-## tooltip(id,helpText)
-Esta funcion se llama desde el evento onMouseEnter de cualquier etiqueta del body del html en cuestion. Mostrara un pequeño texto de ayuda luego de cierto tiempo de que el usuairo puso el cursor sobre el elemento que hizo la llamada.
+```html
+<table id="tabla1">
+    <thead>
+        <tr>
+            <th onclick="hide_column(0, 'tabla1')"> Codigo </th>
+            <th> Nombre </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>01</td>
+            <td>Marco Antonio</td>
+        </tr>
+        <tr>
+            <td>02</td>
+            <td>Laura Larisa</td>
+        </tr>
+        <tr>
+            <td>03</td>
+            <td>Genesis Valeria</td>
+        </tr>
+    </tbody>
+</table>
+```
 
-Parametros:
+---
+
+## tooltip
+Esta funcion se llama desde el evento onMouseEnter de cualquier etiqueta del body del html en cuestión. Mostrará un pequeño texto de ayuda luego de cierto tiempo de que el usuairo puso el cursor sobre el elemento que hizo la llamada.
+
+**Función**:
+
+```javascript
+tooltip(id,helpText)
+```
+
+
+**Parametros**:
+
 - **id**: *String* Es el id del elemento al cual se le debe poner el cursor encima para que muestre el texto de ayuda.
 - **helpText**: *String* Sera el texto que se mostrara al momento que entre el cursor al elemento con el id señalado en el parametro anterior.
 
 
-## filter_combo(filtro_id,combo_id)
-Esta funcion se utiliza en el evento de onKeyUp, onKeyPress o en onKeyDown del input que servira como filtro. Basado en las coincidencias del filtro en el combo, las opciones que no cumplan con	el filtro van a desaparecer temporalmente.
+**Ejemplo**:
 
-Parametros:
+Teniendo el siguiente bloque código, se mostrará la frase *Inserta tu nombre para continuar...* cuando el cursor se coloque en el input con id **nombre**.
+
+```html
+<label for="nombre">Nombre:</label>
+<input type="text" id="nombre" placeholder=" Nombre" onMouseEnter="tooltip('nombre', 'Inserta tu nombre para continuar...')">
+```
+
+---
+
+## filter_combo
+
+Esta funcion se utiliza en el evento de onKeyUp, onKeyPress o en onKeyDown del input que servirá como filtro. Basado en las coincidencias del filtro en el combo, las opciones que no cumplan con	el filtro van a desaparecer hasta que el input esté vacío de nuevo.
+
+
+**Función**:
+
+```html
+filter_combo(filtro_id,combo_id)
+```
+
+
+**Parametros**:
+
 - **filtro_id**: *String* Es el id del input que servira como filtro del combo.
 - **combo_id**: *String* Es el combo que va a ser filtrado basado en lo que se coloque en el input de filtro.
 
 
-## filter_table(filtro_id,table_id,cells_array)
+**Ejemplo**:
+
+```html
+<input type="text" id="filtro" onkeyup="filter_combo('filtro', 'combo')">
+<select name="pais" id="combo">
+    <option value="CN">China</option>
+    <option value="CO">Colombia</option>
+    <option value="GT">Guatemala</option>
+    <option value="MX">Mexico</option>
+    <option value="US">Estados Unidos</option>
+</select>
+```
+
+---
+
+## filter_table
 Funcion que se llama desde el evento onKeyUp, onKeyPress o en onKeyDown del input filtro. Evalua si lo que esta escrito en el filtro concuerda con algun elemento de la tabla que se desea filtrar.
+
+
+**Función**:
+
+```javascript
+filter_table(filtro_id,table_id,cells_array)
+```
 
 Parametros:
 - **filtro_id**: *String* Es el id del input que se utilizara como criterio para filtrar la tabla.

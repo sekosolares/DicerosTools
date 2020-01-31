@@ -17,8 +17,8 @@ para la version minificada.
 
 
 ### Functions:
-- [hide_column](#hide_column(col_no,id_tabla))
-- [tooltip](#tooltip(id,helpText))
+- [hide_column](##hide_column(col_no,id_tabla))
+- [tooltip](##tooltip(id,helpText))
 - [filter_combo](#filter_combo(filtro_id,combo_id))
 - [filter_table](#filter_table(filtro_id,table_id,cells_array))
 - [toggle_column](#toggle_column(col_no,id_tabla))

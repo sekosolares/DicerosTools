@@ -1,5 +1,8 @@
 # DicerosTools js
 
+Una librería de Javascript que permite simplificar tareas en el sistema *Diceros*.
+Tareas como ocultar columnas de tablas, totalizar una tabla, filtrar dropdown lists, etc.
+
 ## Pre-requisitos:
 - [jQuery V3.X](https://jquery.com/)
 
@@ -18,11 +21,11 @@ o bien:
 <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/capulusnoctis/DicerosTools@1.0.0/diceros-tools.min.js"></script>
 ```
 
-para la version minificada.
+para la versión minificada.
 
 ---
 
-## Funciones:
+## Indice de Funciones:
 
 - [hide_column](#hide_column)
 - [tooltip](#tooltip)
@@ -82,6 +85,12 @@ El siguiente ejemplo hará que se oculte la columna de **Código** cuando al enc
     </tbody>
 </table>
 ```
+<p class="codepen" data-height="265" data-theme-id="default" data-default-tab="html,result" data-user="capulusnoctis" data-slug-hash="povMGvN" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;" data-pen-title="Ej-hide_column">
+  <span>See the Pen <a href="https://codepen.io/capulusnoctis/pen/povMGvN">
+  Ej-hide_column</a> by Axel J. Solares (<a href="https://codepen.io/capulusnoctis">@capulusnoctis</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
 
 ---
 
@@ -155,11 +164,20 @@ Funcion que se llama desde el evento onKeyUp, onKeyPress o en onKeyDown del inpu
 filter_table(filtro_id,table_id,cells_array)
 ```
 
-Parametros:
+**Parametros**:
+
 - **filtro_id**: *String* Es el id del input que se utilizara como criterio para filtrar la tabla.
 - **table_id**: *String* Id de la tabla cuyos elementos seran filtrados.
 - **cells_array**: *Array* Este array contiene los numeros de las columnas que seran filtradas, iniciando desde cero. (e.g. [0, 2, 3] filtra la primera, tercera y cuarta columna. [ 0 ] solo filtra la primera columna).
 
+
+**Ejemplo**:
+
+```html
+
+```
+
+---
 
 ## toggle_column(col_no,id_tabla)
 Funcion llamada en el evento onClick de algun boton que permita hacer un toggle de la columna especificada en el parametro col_no.

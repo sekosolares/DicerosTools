@@ -85,12 +85,10 @@ El siguiente ejemplo hará que se oculte la columna de **Código** cuando al enc
     </tbody>
 </table>
 ```
-<p class="codepen" data-height="265" data-theme-id="default" data-default-tab="html,result" data-user="capulusnoctis" data-slug-hash="povMGvN" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;" data-pen-title="Ej-hide_column">
-  <span>See the Pen <a href="https://codepen.io/capulusnoctis/pen/povMGvN">
-  Ej-hide_column</a> by Axel J. Solares (<a href="https://codepen.io/capulusnoctis">@capulusnoctis</a>)
-  on <a href="https://codepen.io">CodePen</a>.</span>
-</p>
-<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+<iframe height="265" style="width: 100%;" scrolling="no" title="Ej-hide_column" src="https://codepen.io/capulusnoctis/embed/povMGvN?height=265&theme-id=default&default-tab=html,result" frameborder="no" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/capulusnoctis/pen/povMGvN'>Ej-hide_column</a> by Axel J. Solares
+  (<a href='https://codepen.io/capulusnoctis'>@capulusnoctis</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
 
 ---
 

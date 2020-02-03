@@ -346,3 +346,5 @@ addBrowser(id_field,proyecto,objeto,where,imgFile)
 - **objeto**: *number* Es el objeto dentro del proyecto especificado que corresponde al reporte.
 - **where**: *String* Corresponde a la sentencia Where que se incluye en el SQL del reporte que sirve como dialogo.
 - **imgFile**: *String* *opcional* Es la ruta de la imagen que servira para representar la accion de dialogo de busqueda.
+
+**Ejemplo**:

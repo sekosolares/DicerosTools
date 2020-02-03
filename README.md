@@ -85,10 +85,8 @@ El siguiente ejemplo hará que se oculte la columna de **Código** cuando al enc
     </tbody>
 </table>
 ```
-<iframe height="265" style="width: 100%;" scrolling="no" title="Ej-hide_column" src="https://codepen.io/capulusnoctis/embed/povMGvN?height=265&theme-id=default&default-tab=html,result" frameborder="no" allowtransparency="true" allowfullscreen="true">
-  See the Pen <a href='https://codepen.io/capulusnoctis/pen/povMGvN'>Ej-hide_column</a> by Axel J. Solares
-  (<a href='https://codepen.io/capulusnoctis'>@capulusnoctis</a>) on <a href='https://codepen.io'>CodePen</a>.
-</iframe>
+
+<a target="_blank" href="https://codepen.io/capulusnoctis/embed/povMGvN?height=265&theme-id=default&default-tab=html,result" style="padding:4px 8px;background:rgb(29, 135, 255);border:0;color:#fff;font-family:Arial,Helvetica,sans-serif;border-radius:4px;">Ver Ejemplo</a>
 
 ---
 
@@ -116,6 +114,8 @@ Teniendo el siguiente bloque código, se mostrará la frase *Inserta tu nombre p
 <label for="nombre">Nombre:</label>
 <input type="text" id="nombre" placeholder=" Nombre" onMouseEnter="tooltip('nombre', 'Inserta tu nombre para continuar...')">
 ```
+
+<a target="_blank" href="https://codepen.io/capulusnoctis/embed/bGNXzow?height=296&theme-id=default&default-tab=html,result" style="padding:4px 8px;background:rgb(29, 135, 255);border:0;color:#fff;font-family:Arial,Helvetica,sans-serif;border-radius:4px;">Ver Ejemplo</a>
 
 ---
 

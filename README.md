@@ -333,7 +333,7 @@ totalizarTabla(obj_tabla,celdas,clase)
 ---
 
 ## addBrowser
-Con esta funcion se agrega la funcionalidad de buscador a un campo en especifico. Llamando a una ventana que contiene la informacion solicitada.
+Con esta funcion se agrega la funcionalidad de buscador a un campo en especifico. Llamando a una ventana que contiene la informacion solicitada. Para que la función trabaje correctamente, debe llamarse cuando todos los elementos del *html* ya están cargados.
 
 **Función**:
 ```javascript
@@ -348,3 +348,32 @@ addBrowser(id_field,proyecto,objeto,where,imgFile)
 - **imgFile**: *String* *opcional* Es la ruta de la imagen que servira para representar la accion de dialogo de busqueda.
 
 **Ejemplo**:
+Para usar *addBrowser()*, ya debe existir el reporte que sirve como buscador en el sistema. Suponiendo que el reporte buscará nombres de clientes, y tiene sus valores *project=15* y *object=227*; para dos *input*s, uno es código y el otro es nombre, la llamada será como sigue:
+
+Con el primer parámetro como String, se debe tomar en consideración que debe existir una función que recupere el nombre del cliente basado en el código que se recuperará del buscador.
+
+```html
+<label for="codcliente">Cliente</label>
+<input type="number" name="cliente" id="codcliente">
+<input type="text" id="nomcliente">
+<script>
+    addBrowser('codcliente', 15, 227, " and 1 = 0", "https://cdn4.iconfinder.com/data/icons/6x16-free-application-icons/16/Find.png");
+</script>
+```
+
+<a href="https://codepen.io/capulusnoctis/embed/VwLZpRd?height=265&theme-id=default&default-tab=html,result" style="padding:8px 10px;background:rgb(29, 135, 255);border:0;color:#fff;font-family:Arial,Helvetica,sans-serif;border-radius:4px;text-decoration:none;" target="_blank">Ver Ejemplo</a>
+
+Con el primer parámetro como Array hay que seguir el siguiente orden: [ codigo, nombre, nit, direccion, telefono ]. En este caso no es necesario tener una función que recupere el nombre, pues el reporte de encargará de poner los valores de cada campo que se le indique.
+
+En este caso, solo se tiene *codigo* y *nombre*, por lo que solo se usarán esos valores en el array.
+
+```html
+<label for="codcliente">Cliente</label>
+<input type="number" name="cliente" id="codcliente">
+<input type="text" id="nomcliente">
+<script>
+    addBrowser(['codcliente', 'nomcliente'], 15, 227, " and 1 = 0", "https://cdn4.iconfinder.com/data/icons/6x16-free-application-icons/16/Find.png");
+</script>
+```
+
+<a href="https://codepen.io/capulusnoctis/embed/PoqYmxZ?height=265&theme-id=default&default-tab=html,result" style="padding:8px 10px;background:rgb(29, 135, 255);border:0;color:#fff;font-family:Arial,Helvetica,sans-serif;border-radius:4px;text-decoration:none;" target="_blank">Ver Ejemplo</a>

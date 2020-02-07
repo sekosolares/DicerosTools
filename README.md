@@ -281,7 +281,7 @@ move_tabs(do_it,tabs_id)
 
 ---
 
-## fAvisoNew(titulo,msg)
+## fAvisoNew
 Funcion que genera una ventana de aviso en tiempo de corrida. Una simple ventana con el mensaje que se quiere especificar.
 
 **Función**:

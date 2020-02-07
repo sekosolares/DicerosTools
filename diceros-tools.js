@@ -554,7 +554,16 @@ function addBrowser(id_field, proyecto, objeto, where, imgFile = "fa-search.png"
         var refField = id_field;
         var searchField = document.getElementById(refField);
     }else{
-        var refField = id_field[0];
+		for(let iter = 0; iter < id_field.length; iter++){
+			if(id_field[iter].indexOf("--search") > -1){
+				var refField = id_field[iter].substring(0, id_field[iter].indexOf("--search"));
+				break;
+			} else
+				var refField = -1;
+		}
+		if(refField === -1){
+			refField = id_field[0];
+		}
         var searchField = document.getElementById(refField);
     }
 
@@ -579,7 +588,7 @@ function addBrowser(id_field, proyecto, objeto, where, imgFile = "fa-search.png"
     });
     
     innerDiv.addEventListener('click', function(){
-        window.open("rbplus?p=" + proyecto + "&o=" + objeto + "&w=" + where + "&VACAMPOS=" + id_field.toString(),'', 'menubar=yes,resizable=yes,toolbar=yes,titlebar=yes,scrollbars=yes,left=300,top=150,width=1100,height=575');
+        window.open("rbplus?p=" + proyecto + "&o=" + objeto + "&w=" + where + "&VACAMPOS=" + id_field.toString().replace(/--search/g, ""),'', 'menubar=yes,resizable=yes,toolbar=yes,titlebar=yes,scrollbars=yes,left=300,top=150,width=1100,height=575');
         jQuery(document.querySelectorAll("div.fadedBehind")[0]).show(950);
         jQuery(this).parent().hide(950);
     });

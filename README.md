@@ -32,7 +32,6 @@ para la versión minificada.
 - [filter_combo](#filter_combo)
 - [filter_table](#filter_table)
 - [toggle_column](#toggle_column)
-- [open_report](#open_report)
 - [move_tabs](#move_tabs)
 - [fAvisoNew](#fAvisoNew)
 - [formatNumber](#formatNumber)
@@ -249,23 +248,6 @@ En este ejemplo, el botón hará el toggle de la columna **Nombre**.
 
 ---
 
-## open_report
-Funcion pensada para que sea la que se llame desde los botones de impresion de reportes.
-
-
-**Función**:
-```javascript
-open_report(project,object,template,params)
-```
-
-**Parametros**:
-- **project**: *integer* El id del proyecto en el que se encuentra el reporte que se llama.
-- **object**: *integer* Id del objeto correspondiente al objeto que tiene el reporte.
-- **template**: *String* *opcional* Especifica si hay que utilizar algun template en particular.
-- **params**: *String* *opcional* En el caso de que haya que llenar parametros del lado del objeto en donde esta el reporte, se debe especificar aqui. e.g. "&VACAMPO=1&VACAMPO2=2"
-
----
-
 ## move_tabs
 Funcion que resuelve el problema de los forms con tabs. Mueve los tabs al lugar en el que deberian ir normalmente para no afectar el funcionamiento en los browsers Chrome, Opera, Firefox y Edge.
 
@@ -333,47 +315,38 @@ totalizarTabla(obj_tabla,celdas,clase)
 ---
 
 ## addBrowser
-Con esta funcion se agrega la funcionalidad de buscador a un campo en especifico. Llamando a una ventana que contiene la informacion solicitada. Para que la función trabaje correctamente, debe llamarse cuando todos los elementos del *html* ya están cargados.
+Con esta funcion se agrega la funcionalidad de buscador a un campo en especifico. Llamando a una ventana que contiene la informacion solicitada. Para que la función trabaje correctamente, debe llamarse cuando todos los elementos del *html* ya están cargados, o por lo menos los elementos a los que se haga referencia al llamar la función.
 
 **Función**:
 ```javascript
-addBrowser(id_field,proyecto,objeto,where,imgFile)
+addBrowser(id_field,proyecto,objeto,where[,imgFile])
 ```
 
 **Parametros**:
-- **id_field**: *String* ```|``` *Array* Si es String, representa el id del campo al que se le agrega el buscador y al que se le insertara el valor. Si es un array, el primer elemento debe ser el id del campo al que se le agregara el buscador y los elementos que siguen, son en caso de que  se desee insertar otros datos en otros campos. (e.g. ["CLIENTE", "NIT"] insertara un valor tanto en el id de CLIENTE como en el de NIT).
-- **proyecto**: *number* Representa el numero de proyecto en el que se encuentra el reporte que sirve como dialogo.
-- **objeto**: *number* Es el objeto dentro del proyecto especificado que corresponde al reporte.
-- **where**: *String* Corresponde a la sentencia Where que se incluye en el SQL del reporte que sirve como dialogo.
-- **imgFile**: *String* *opcional* Es la ruta de la imagen que servira para representar la accion de dialogo de busqueda.
+- **id_field**: *Array* Hace referencia al array formado por los *id*s de los campos a los que se les pondrán los datos que vengan del buscador. Estos *id*s, van acompañados de unos "indicadores" los cuales señalan qué *id* llevará el icono de buscador y cuál es el nombre de columna equivalente en el buscador para cada *id*. Esto se entiende mejor en el ejemplo.
+- **proyecto**: *number* Representa el número de proyecto en el que se encuentra el reporte que sirve como buscador.
+- **objeto**: *number* Es el objeto, dentro del proyecto especificado, que corresponde al reporte buscador.
+- **where**: *String* Corresponde a la continuación de sentencia *Where* que se incluye en el SQL del buscador.
+- **imgFile**: *String* *opcional* (**Default**: */fa-search.png*) Es la ruta de la imagen que servira como icono al que se le hará clic para hacer la llamada al buscador.
 
 **Ejemplo**:
-Para usar *addBrowser()*, ya debe existir el reporte que sirve como buscador en el sistema. Suponiendo que el reporte buscará nombres de clientes, y tiene sus valores *project=15* y *object=227*; para dos *input*s, uno es código y el otro es nombre, la llamada será como sigue:
-
-Con el primer parámetro como String, se debe tomar en consideración que debe existir una función que recupere el nombre del cliente basado en el código que se recuperará del buscador.
+Para usar *addBrowser()*, ya debe existir el reporte que sirve como buscador en el sistema. Suponiendo que el reporte buscará códigos y nombres de clientes, y tiene sus valores *project=15* y *object=227*; para dos *input*s ( siendo uno el código y el otro el nombre del cliente ) la llamada será como sigue:
 
 ```html
 <label for="codcliente">Cliente</label>
-<input type="number" name="cliente" id="codcliente">
-<input type="text" id="nomcliente">
+<input type="number" name="cliente" id="codcliente" placeholder="codigo">
+<input type="text" id="nomcliente" placeholder="nombre">
 <script>
-    addBrowser('codcliente', 15, 227, " and 1 = 0", "https://cdn4.iconfinder.com/data/icons/6x16-free-application-icons/16/Find.png");
+  addBrowser(['codcliente--asCODCLIENTE', 'nomcliente--search--asNOMCLIENTE'], 15, 227, " and estadoCliente = 1" /* Agrega esta condicion en el "where" */, "https://cdn4.iconfinder.com/data/icons/6x16-free-application-icons/16/Find.png");
 </script>
 ```
+#### Observaciones en el primer parámetro:
+En este caso, solo se tiene *codigo* y *nombre*, por lo que solo se usarán esos valores en el array del primer parámetro. De tal forma que el array queda escrito: *['**id-1**--as**NOMBRE-DE-COLUMNA**', '**id-2**--search--as**NOMBRE-DE-COLUMNA**']*. 
 
-<a href="https://codepen.io/capulusnoctis/embed/VwLZpRd?height=265&theme-id=default&default-tab=html,result" style="padding:8px 10px;background:rgb(29, 135, 255);border:0;color:#fff;font-family:Arial,Helvetica,sans-serif;border-radius:4px;text-decoration:none;" target="_blank">Ver Ejemplo</a>
 
-Con el primer parámetro como Array hay que seguir el siguiente orden: [ codigo, nombre, nit, direccion, telefono ]. En este caso no es necesario tener una función que recupere el nombre, pues el reporte de encargará de poner los valores de cada campo que se le indique.
-
-En este caso, solo se tiene *codigo* y *nombre*, por lo que solo se usarán esos valores en el array.
-
-```html
-<label for="codcliente">Cliente</label>
-<input type="number" name="cliente" id="codcliente">
-<input type="text" id="nomcliente">
-<script>
-    addBrowser(['codcliente', 'nomcliente'], 15, 227, " and 1 = 0", "https://cdn4.iconfinder.com/data/icons/6x16-free-application-icons/16/Find.png");
-</script>
-```
-
-<a href="https://codepen.io/capulusnoctis/embed/PoqYmxZ?height=265&theme-id=default&default-tab=html,result" style="padding:8px 10px;background:rgb(29, 135, 255);border:0;color:#fff;font-family:Arial,Helvetica,sans-serif;border-radius:4px;text-decoration:none;" target="_blank">Ver Ejemplo</a>
+Es importante destacar los "indicadores":
+* ***--search*** : Indica a cual *id* se le debe poner a la par el icono de buscador. **Solo debe estar en un *id* para que funcione correctamente**.
+* ***--as*** : Es la forma de decir "este id (*nomCliente*) **es** (*--as*) esta columna en el reporte buscador (*NOMCLIENTE*)".
+<br>
+<br>
+<a href="https://codepen.io/capulusnoctis/embed/PoqYmxZ?height=265&theme-id=light&default-tab=html,result" style="padding:8px 10px;background:rgb(29, 135, 255);border:0;color:#fff;font-family:Arial,Helvetica,sans-serif;border-radius:4px;text-decoration:none;" target="_blank">Ver Ejemplo</a>

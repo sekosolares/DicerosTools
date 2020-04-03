@@ -130,7 +130,7 @@ function tooltip( id, helpText ) {
 		// Si el cursor permanecio adentro, se mostrara el <div> con el texto del parametro.
 		$("#tooltip"+id).delay(900).fadeIn(500);
 	} else {
-		(doAlert)? alert("jQuery required so move_tabs can work!") : console.warn("jQuery is not included, so functions like tooltip() or move_tabs() cannot run properly.");
+		(doAlert)? console.warn("jQuery required so move_tabs can work!") : console.warn("jQuery is not included, so functions like tooltip() or move_tabs() cannot run properly.");
 		doAlert = false;
 	}
 }
@@ -296,7 +296,7 @@ function move_tabs(do_it, tabs_id){
 			console.info("Done move_tabs()");
 		}
 	} else {
-		(doAlert)? alert("jQuery required so move_tabs can work!") : console.warn("jQuery is not included, so functions like tooltip() or move_tabs() cannot run properly.");
+		(doAlert)? console.warn("jQuery required so move_tabs can work!") : console.warn("jQuery is not included, so functions like tooltip() or move_tabs() cannot run properly.");
 		doAlert = false;
 	}
 }
@@ -587,4 +587,3 @@ document.addEventListener('DOMContentLoaded', function(){
 	// Al cargar la pagina, ejecutar la funcion para acomodar los tabs en caso de ser necesario.
 	move_tabs(do_tab_movement, "tabstop");
 });
-

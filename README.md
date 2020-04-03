@@ -261,6 +261,9 @@ move_tabs(do_it,tabs_id)
 - **do_it**: *boolean* Determina si debe ejecutarse la funcion o no.
 - **tabs_id**: *String* Se refiere al id del o los divs que contienen los tabs, a los cuales se le dara movimiento.
 
+*Ejemplo no disponible.*
+> Esta funcion solo responde en el contexto del sistema Diceros. <sub><a href="http://www.ls-sys.com" target="_blank">información</a></sub>
+
 ---
 
 ## fAvisoNew
@@ -311,6 +314,43 @@ totalizarTabla(obj_tabla,celdas,clase)
 - **obj_tabla**: *Object* El object que representa la tabla a la que se quiere agregar totales.
 - **celdas**: *Array* Un array que contiene el numero de las columnas que se deben totalizar; empezando desde cero. (e.g. [1, 3] totaliza la columna 2 y 4 de la tabla especificada en el obj_tabla).
 - **clase**: *String* *opcional* Especifica el nombre de la clase que deberia tener el tag ```<tr>``` que contiene los totales.
+
+**Ejemplo**:
+En el ejemplo, se utiliza el Objeto de la tabla y se coloca [2] en el parámetro de *celdas* para totalizar la 3ra columna. La clase que se coloca es "g-total", la cual está definida en el CSS.
+
+```html
+<table id="tabla1">
+    <thead>
+        <tr>
+            <th> Codigo </th>
+            <th> Nombre </th>
+            <th> Ahorro </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>01</td>
+            <td>Marco Antonio</td>
+            <td>3,500.00</td>
+        </tr>
+        <tr>
+            <td>02</td>
+            <td>Laura Larisa</td>
+            <td>450.00</td>
+        </tr>
+        <tr>
+            <td>03</td>
+            <td>Genesis Valeria</td>
+            <td>5,369.99</td>
+        </tr>
+    </tbody>
+</table>
+<script>
+  totalizarTabla( document.querySelector("#tabla1"), [2], "g-total" );
+</script>
+```
+
+<a href="https://codepen.io/capulusnoctis/embed/dyowRBV?height=265&theme-id=light&default-tab=html,result" style="padding:8px 10px;background:rgb(29, 135, 255);border:0;color:#fff;font-family:Arial,Helvetica,sans-serif;border-radius:4px;text-decoration:none;" target="_blank">Ver Ejemplo</a>
 
 ---
 

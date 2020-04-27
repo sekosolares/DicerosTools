@@ -396,17 +396,21 @@ function totalizarTabla(obj_tabla, celdas, clase = "noclass"){
     for(var i = 0; i < filas.length; i++){
         let filaActual = filas[i];
         let celdas = filaActual.getElementsByTagName("td");
-    
-        if( celdas.length == 0 )
-            continue;
-    
-        for(let j = 0; j < posiciones.length; j++){
-            let posAct = posiciones[j];
-            posAct *= 1;
-            let valAct = celdas[posAct].innerHTML;
-            valAct = ( valAct.replace(/,/g, '') ) * 1;
-            valores[j] = valores[j] + valAct;
-        }
+		
+		if(filaActual.style.display != 'none'){ // Si todo el row no es visible, no se toma en cuenta.
+			if( celdas.length == 0 )
+				continue;
+		
+			for(let j = 0; j < posiciones.length; j++){
+				let posAct = posiciones[j];
+				posAct *= 1;
+				if(celdas[posAct].style.display != 'none'){ // Si la celda no es visible, no se toma en cuenta
+					let valAct = celdas[posAct].innerHTML;
+					valAct = ( valAct.replace(/,/g, '') ) * 1;
+					valores[j] = valores[j] + valAct;
+				}
+			}
+		}
     }
     
     

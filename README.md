@@ -12,13 +12,13 @@ Tareas como ocultar columnas de tablas, totalizar una tabla, filtrar dropdown li
 Sencillamente hay que copiar y pegar este código para incluir DicerosTools en el *html*:
 
 ```html
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/capulusnoctis/DicerosTools@1.1.5/diceros-tools.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/capulusnoctis/DicerosTools@1.1.6/diceros-tools.js"></script>
 ```
 
 o bien:
 
 ```html
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/capulusnoctis/DicerosTools@1.1.5/diceros-tools.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/capulusnoctis/DicerosTools@1.1.6/diceros-tools.min.js"></script>
 ```
 
 para la versión minificada.

@@ -376,7 +376,7 @@ function totalizarTabla(obj_tabla, celdas, clase = "noclass"){
 	filaTotal.classList.add(clase); // parametro clase
 
 	// Eliminando <tr> totales para no hacer stack de totales.
-	let trsTotales = document.querySelectorAll(`tr.${clase}`);
+	let trsTotales = tabla.querySelectorAll(`tr.${clase}`);
 
 	for(let i = 0; i < trsTotales.length; ++i){
 		console.log(`Eliminando total#${i} > ${trsTotales[i]}`);

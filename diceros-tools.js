@@ -379,7 +379,8 @@ function totalizarTabla(obj_tabla, celdas, clase = "noclass"){
     
     
     for(let i = 0; i < posiciones.length; i++){
-        valores.push(0);
+        //valores.push(0);
+		valores[i] = 0;
     }
 	
 	console.debug(`Valores vs Posiciones: vals: ${valores} | pos: ${posiciones}`);

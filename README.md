@@ -27,6 +27,7 @@ para la versión minificada.
 
 ## Indice de Funciones:
 
+- [get](#get)
 - [hide_column](#hide_column)
 - [tooltip](#tooltip)
 - [filter_combo](#filter_combo)
@@ -38,6 +39,20 @@ para la versión minificada.
 - [totalizarTabla](#totalizarTabla)
 - [addBrowser](#addBrowser)
 
+
+## get
+Es una forma corta para llamar a *document.querySelector()*.
+
+**Función**:
+```javascript
+get(str)
+```
+
+
+**Parametros**:
+- **str**: *String* Es lo mismo que se pondría en un *document.querySelector()*. Por ejemplo: *document.querySelector("input\[name='nombre'\]")* para obtener el input cuyo atributo *name* sea *nombre*.
+
+---
 
 ## hide_column
 Funcion llamada en el evento onClick de una etiqueta `<th>` para ocultar la columna del click.

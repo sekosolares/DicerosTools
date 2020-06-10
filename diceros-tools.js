@@ -5,6 +5,7 @@
 		Este script contiene funciones con diferentes utilidades para
 		diferentes eventos.
 		Content:
+			> get(str)
 			> hide_column(col_no, id_tabla)
 			> tooltip(id, helpText)
 			> filter_combo(filtro_id, combo_id)
@@ -40,6 +41,18 @@ var isEdge = ( (navigator.userAgent).indexOf("Edge") > -1 );
 
 // Chrome 1+
 var isChrome = ( (navigator.userAgent).indexOf("Chrome") > -1 );
+
+/*
+	Esta funcion es una forma mas corta de llamar a document.querySelector().
+	Version:
+		> 1.0
+	Parametros:
+		> str: [String] Es el string que iria en un document.querySelector(str) normal.
+*/
+function get(str) {
+	return document.querySelector(str);
+}
+
 
 /*
 	Funcion llamada en el evento onClick de una etiqueta <th> para
@@ -262,7 +275,7 @@ function toggle_column(col_no, id_tabla) {
 	deberian ir normalmente para no afectar el funcionamiento en los browsers Chrome, Opera,
 	Firefox y Edge.
 	Version:
-		> 1.0
+		> 1.1
 	Parametros:
 		> do_it: [boolean] Determina si debe ejecutarse la funcion o no.
 		> tabs_id: [String] Se refiere al id del o los divs que contienen los tabs, a los cuales
@@ -281,7 +294,8 @@ function move_tabs(do_it, tabs_id){
 			var i;
 			for(i = 0; i < document.querySelectorAll(tabs_id).length; i++){
 				document.querySelectorAll(tabs_id)[i].style.position = "relative";
-				document.querySelectorAll(tabs_id)[i].style.display = "block";
+				document.querySelectorAll(tabs_id)[i].style.display = "inline-block";
+				document.querySelectorAll(tabs_id)[i].style.width = "min-content";
 				tabstop_cont.push(document.querySelectorAll(tabs_id)[i]);
 			}
 			console.log("Remove old tab divs...");

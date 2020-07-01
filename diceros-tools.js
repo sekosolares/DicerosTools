@@ -193,7 +193,7 @@ function filter_combo(filtro_id, combo_id){
 									[0] solo filtra la primera columna).
 */
 function filter_table(filtro_id, table_id, cells_array){
-	var input, filter, table, tr, tds, i, j;
+	var input, filter, table, tr, i, j;
 
 	input = document.getElementById(filtro_id);
 	filter = input.value.toUpperCase();
@@ -234,8 +234,8 @@ function filter_table(filtro_id, table_id, cells_array){
 		if(coincideAnt){
 			tr[i].style.display = "";
 		} else {
-        if(isTh <= 0)
-					tr[i].style.display = "none";
+        	if(isTh <= 0)
+				tr[i].style.display = "none";
 		}
 	}
 }

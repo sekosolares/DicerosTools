@@ -295,7 +295,7 @@ function move_tabs(do_it, tabs_id){
 			for(i = 0; i < document.querySelectorAll(tabs_id).length; i++){
 				document.querySelectorAll(tabs_id)[i].style.position = "relative";
 				document.querySelectorAll(tabs_id)[i].style.display = "inline-block";
-				document.querySelectorAll(tabs_id)[i].style.width = "min-content";
+				document.querySelectorAll(tabs_id)[i].style.width = "fit-content";
 				tabstop_cont.push(document.querySelectorAll(tabs_id)[i]);
 			}
 			console.log("Remove old tab divs...");

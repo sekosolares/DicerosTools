@@ -1,6 +1,6 @@
 /******************************************************************************
 		Author: .asolares.
-		Version: 1.2.1
+		Version: 1.2.2
 
 		Este script contiene funciones con diferentes utilidades para
 		diferentes eventos.
@@ -182,7 +182,7 @@ function filterCombo(filtroId, comboId) {
 									iniciando desde cero. (e.g. [0, 2, 3] filtra la primera, tercera y cuarta columna.
 									[0] solo filtra la primera columna).
 */
-function filter_table(filtro_id, table_id, cells_array){
+function filter_table(filtro_id, table_id, cells_array='all'){
 	let input, filter, table, tr, i, j;
 
 	input = document.getElementById(filtro_id);
@@ -193,6 +193,13 @@ function filter_table(filtro_id, table_id, cells_array){
 	for (i = 0; i < tr.length; i++) {
 		let coincide = false;
 		let coincideAnt = true;
+
+		if(cells_array === 'all') {
+			cells_array = [];
+			for(let i = 0; i < tr[i].cells.length; i++) {
+				cells_array.push(i);
+			}
+		}
 
 		for(j = 0; j < cells_array.length; j++) {
 			let item = cells_array[j];

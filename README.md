@@ -3,9 +3,6 @@
 Una librería de Javascript que permite simplificar tareas en el sistema *Diceros*.
 Tareas como ocultar columnas de tablas, totalizar una tabla, filtrar dropdown lists, etc.
 
-## Pre-requisitos:
-- [jQuery V3.X](https://jquery.com/)
-
 ---
 
 ## Cómo instalar:

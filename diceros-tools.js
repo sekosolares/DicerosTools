@@ -42,7 +42,6 @@ function get(str) {
 	return element;
 }
 
-
 /**
  * Funcion llamada en el evento onClick de una etiqueta <th> para
 	ocultar la columna del click.
@@ -53,49 +52,64 @@ function get(str) {
  */
 function hide_column(colIndex, idTable) {
 	const tabla  = document.getElementById(idTable);
-	const rows = tabla.getElementsByTagName('tr');
+	const rows = [...tabla.getElementsByTagName('tr')];
 
-	for (let row = 0; row < rows.length; row++) {
-		let cells = rows[row].getElementsByTagName('td');
+	rows.forEach(row => row.cells[colIndex].style.display = "none");
 
-		if(row == 0 && rows[row].getElementsByTagName('th').length > 0)
-			cells = rows[row].getElementsByTagName('th');
+	const arrTHs = [...tabla.getElementsByTagName("th")];
+	const arrTDs = [...tabla.getElementsByTagName("td")];
 
-		cells[colIndex].style.display = "none";
-		cells[colIndex].style.width = "0%";
-	}
-
-	let countH = document.getElementsByTagName("th");
-	countH = countH.length;
-
-	let col_style;
-	let visibles = 0;
-	for(let i = 0; i < countH; i++){
-		col_style = document.getElementsByTagName("th")[i].style.display;
-		if(col_style != "none"){
-			visibles++;
-		}
-	}
-
-	let anchoCols = 100 / visibles;
+	const cellLength = arrTHs.length > 0 ? arrTHs.length : arrTDs.length;
+	let anchoCols = 100 / cellLength;
 	anchoCols = anchoCols.toFixed(2);
-
-	for(let i = 0; i < countH; i++){
-		if( tabla.getElementsByTagName("th")[i].style.display != "none"){
-			tabla.getElementsByTagName("th")[i].style.width = anchoCols+"%";
-		}
-	}
-
-	let countD = tabla.getElementsByTagName("td");
-	countD = countD.length;
-	for(let k = 0; k < countD; k++){
-		if( tabla.getElementsByTagName("td")[k].style.display != "none"){
-			tabla.getElementsByTagName("td")[k].style.width = anchoCols+"%";
-		}
-	}
+	arrTHs.forEach(th => th.style.width = `${anchoCols}%`);
+	arrTDs.forEach(td => td.style.width = `${anchoCols}%`);
+}
+function hideColumn(colIndex, idTable) {
+	hide_column(colIndex, idTable);
 }
 
-let doAlert = true;
+
+function checkClassExistence(className) {
+	const exists = [...document.querySelectorAll('style')]
+		.some(elem => elem.innerHTML.includes(className));
+	return exists;
+}
+
+function insertTooltipStyling({fieldId, xPos, yPos}) {
+	const TooltipStyle = `<style id="Tooltip_Style_${fieldId}">
+		.tooltip-style-${fieldId} {
+			left:${xPos}px;top:${yPos}px;
+			font-family:Arial, sans-serif;
+			border:1px solid gray;
+			position:absolute;
+			color:#888888;
+			font-size:14px;
+			background-color:#fff;
+			width:auto;
+			height:auto;
+			padding:8px;
+			border-radius:10px;
+			box-shadow:0px 5px 15px gray;
+			animation: linear fade-in .4s;
+		}
+		@keyframes fade-in {
+			from {
+				opacity: 0;
+			}
+			to {
+				opacity: 1;
+			}
+		}
+		.tooltip--inactive {
+			display:none;
+		}
+	</style>`;
+	if(checkClassExistence(`tooltip-style-${fieldId}`))
+		get(`#Tooltip_Style_${fieldId}`).remove();
+	get("body").insertAdjacentHTML('beforebegin', TooltipStyle);
+}
+
 /**
 * Esta funcion se llama desde el evento onMouseEnter de cualquier etiqueta
 del body del html en cuestion. Mostrara un pequeño texto de ayuda luego
@@ -106,57 +120,54 @@ hizo la llamada.
 encima para que muestre el texto de ayuda.
 * @param {string} helpText Sera el texto que se mostrara al momento que
 entre el cursor al elemento con el id señalado en el parametro anterior.
+* @param {Event | undefined} [ev=event] Se refiere al evento del mouse del cual
+se sacan las coordenadas del pointer.
 */
-function tooltip( id, helpText ) {
-	if(window.jQuery){
-		let posElem = $("#"+id).position();
-		let ancho = $("#"+id).width();
-		let alto = $("#"+id).height();
-		let yPos = posElem.top + alto;
-		let xPos = posElem.left + ancho;
+function tooltip( id, helpText, ev=event ) {
+	const {clientX, clientY} = ev;
 
-		// Genera el elemento (un <div>) con el texto en tiempo de corrida.
-		$("body").append("<div id='tooltip"+id+"' class='tooltip' style='display:none;left:"+xPos+"px;top:"+yPos+"px;font-family:Arial, sans-serif;border:1px solid gray;position:absolute;color:#888888;font-size:14px;background-color:#fff;width:auto;height:auto;padding:8px;border-radius:10px;box-shadow:0px 5px 15px gray;'> " + helpText + " </div>");
+	insertTooltipStyling({ fieldId: id, xPos: clientX, yPos: clientY });
 
-		// Al salir el cursor del elemento, remueve el <div> creado para que no existan stacks.
-		$("#"+id).mouseleave(function(){
-			$("#tooltip"+id).remove();
-		});
+	get(`#${id}`).parentElement.insertAdjacentHTML('afterend',
+		`<div
+			id='tooltip${id}'
+			class='tooltip tooltip--inactive tooltip-style-${id}'>${helpText}</div>`
+	)
 
-		// Si el cursor permanecio adentro, se mostrara el <div> con el texto del parametro.
-		$("#tooltip"+id).delay(900).fadeIn(500);
-	} else {
-		(doAlert)? console.warn("jQuery required so move_tabs can work!") : console.warn("jQuery is not included, so functions like tooltip() or move_tabs() cannot run properly.");
-		doAlert = false;
-	}
+	// Al salir el cursor del elemento, remueve el <div> creado para que no existan stacks.
+	get(`#${id}`).addEventListener('mouseleave', function() {
+		get(`#tooltip${id}`) && get(`#tooltip${id}`).remove();
+	});
+
+	// Si el cursor permanecio adentro, se mostrara el <div> con el texto del parametro.
+	get(`#tooltip${id}`).classList.remove("tooltip--inactive");
 }
 
 /**
  * Esta funcion se utiliza en el evento de onKeyUp, onKeyPress o en onKeyDown del input que servira
 	como filtro. Basado en las coincidencias del filtro en el combo, las opciones que no cumplan con
 	el filtro van a desaparecer para dejar solo lo que se esta filtrando.
- * @param {string} filtro_id Es el id del input que servira como filtro del combo.
- * @param {string} combo_id Es el id del combo que va a ser filtrado.
+ * @param {string} filtroId Es el id del input que servira como filtro del combo.
+ * @param {string} comboId Es el id del combo que va a ser filtrado.
  */
-function filter_combo(filtro_id, combo_id){
-    let input, filter, combo, opt, actual_opt, i;
+function filter_combo(filtroId, comboId){
+    let
+		input = document.getElementById(filtroId),
+    filterValue = input.value.toUpperCase(),
+    combo = document.getElementById(comboId),
+    options = [...combo.getElementsByTagName("option")];
 
-    input = document.getElementById(filtro_id);
-    filter = input.value.toUpperCase();
-    combo = document.getElementById(combo_id);
-    opt = combo.getElementsByTagName("option");
-	//Ciclo que hace el trabajo de esconder lo que no cumpla con el filtro.
-    for (i = 0; i < opt.length; i++) {
-			actual_opt = opt[i];
-			if (actual_opt) {
-				if ( (actual_opt.innerHTML.toUpperCase().indexOf(filter) > -1) ) {
-					opt[i].style.display = "";
-					combo.selectedIndex = combo.options[i].index;
-				} else {
-					opt[i].style.display = "none";
-				}
+    options.forEach(option => {
+			if ( option.innerHTML.toUpperCase().includes(filterValue) ) {
+				option.style.display = "";
+				combo.selectedIndex = option.index;
+			} else {
+				option.style.display = "none";
 			}
-    }
+		});
+}
+function filterCombo(filtroId, comboId) {
+	filter_combo(filtroId, comboId);
 }
 
 /*
@@ -244,7 +255,7 @@ function toggle_column(colIndex, id_tabla) {
 	}
 }
 
-doAlert = true;
+let doAlert = true;
 /**
  * Funcion que resuelve el problema de los forms con tabs. Mueve los tabs al lugar en el que
 	deberian ir normalmente, para no afectar el funcionamiento en los browsers Chrome, Opera,
@@ -266,7 +277,7 @@ function move_tabs(doIt, tabsId){
 				tab.style.position = "relative";
 				tab.style.display = "inline-block";
 				tab.style.width = "fit-content";
-				tabstop_cont.push(document.querySelectorAll(tabsId)[i]);
+				tabstop_cont.push(tab);
 			}
 			console.log("Remove old tab divs...");
 			for(let tab of document.querySelectorAll(tabsId)){
@@ -438,28 +449,6 @@ function totalizarTabla(objTabla, celdas, clase = "noclass"){
 }
 
 
-/* 
-	Con esta funcion se agrega la funcionalidad de buscador a un campo
-	 en especifico. Llamando a una ventana que contiene la informacion
-	 solicitada.
-	Version:
-		> 1.2
-	Parametros:
-		> id_field: [String | Array] Si es String, representa el id del campo al que
-					se le agrega el buscador y al que se le insertara el valor. Si es un
-					array, el primer elemento debe ser el id del campo al que se le 
-					agregara el buscador y los elementos que siguen, son en caso de que 
-					se desee insertar otros datos en otros campos. (e.g. ["CLIENTE", "NIT"] 
-					insertara un valor tanto en el id de CLIENTE como en el de NIT).
-		> proyecto: [number] Representa el numero de proyecto en el que se encuentra el 
-					reporte que sirve como dialogo.
-		> objeto: [number] Es el objeto dentro del proyecto especificado que corresponde 
-					al reporte.
-		> where: [String] Corresponde a la sentencia Where que se incluye en el SQL del 
-					reporte que sirve como dialogo.
-		> imgFile: [String] [opcional] Es la ruta de la imagen que servira para representar 
-					la accion de dialogo de busqueda.
-*/
 /**
  * Con esta funcion se agrega la funcionalidad de buscador a un campo
 	en especifico. Llamando a una ventana que contiene la informacion

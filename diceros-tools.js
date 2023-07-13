@@ -1,6 +1,6 @@
 /******************************************************************************
 		Author: .asolares.
-		Version: 1.1.6
+		Version: 1.2.1
 
 		Este script contiene funciones con diferentes utilidades para
 		diferentes eventos.

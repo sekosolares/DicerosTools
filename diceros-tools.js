@@ -255,7 +255,6 @@ function toggle_column(colIndex, id_tabla) {
 	}
 }
 
-let doAlert = true;
 /**
  * Funcion que resuelve el problema de los forms con tabs. Mueve los tabs al lugar en el que
 	deberian ir normalmente, para no afectar el funcionamiento en los browsers Chrome, Opera,
@@ -263,36 +262,29 @@ let doAlert = true;
  * @param {boolean} doIt Determina si debe ejecutarse la funcion o no.
  * @param {string} tabsId Se refiere al id del o los divs que contienen los tabs, a los cuales se le dara movimiento.
  */
-function move_tabs(doIt, tabsId){
-	if(window.jQuery){
-		if(!doIt){
-			console.log("Not a tab form. Wont move any tabs.");
-		}else{
-			tabsId = "#" + tabsId;
-			let tabstop_cont = new Array();
-			console.log("Execute tab movement.");
-			document.querySelectorAll(tabsId);
-
-			for(let tab of document.querySelectorAll(tabsId)){
-				tab.style.position = "relative";
-				tab.style.display = "inline-block";
-				tab.style.width = "fit-content";
-				tabstop_cont.push(tab);
-			}
-			console.log("Remove old tab divs...");
-			for(let tab of document.querySelectorAll(tabsId)){
-				tab.remove();
-			}
-
-			console.log("Reposition tab divs.");
-			for(let tab of tabstop_cont){
-				$("#T11").before(tab);
-			}
-			console.info("Done move_tabs()");
-		}
+function move_tabs(doIt, tabsId) {
+	if(!doIt) {
+		console.log("Not a tab form. Wont move any tabs.");
 	} else {
-		(doAlert)? console.warn("jQuery required so move_tabs can work!") : console.warn("jQuery is not included, so functions like tooltip() or move_tabs() cannot run properly.");
-		doAlert = false;
+		tabsId = `#${tabsId}`;
+		let tabstop_cont = new Array();
+		console.log("Execute tab movement.");
+		const allTabs = [...document.querySelectorAll(tabsId)];
+
+		allTabs.forEach(tab => {
+			tab.style.position = "relative";
+			tab.style.display = "inline-block";
+			tab.style.width = "fit-content";
+			tabstop_cont.push(tab);
+		});
+
+		console.log("Remove old tab divs...");
+		allTabs.forEach(tab => tab.remove());
+
+		console.log("Reposition tab divs.");
+		tabstop_cont.forEach(tab => get("#T11").insertAdjacentElement('beforebegin', tab));
+
+		console.info("Done move_tabs()");
 	}
 }
 
@@ -330,15 +322,6 @@ function fAvisoNew( titulo, msg ){
 	console.log("Se ha generado un aviso del sistema!");
 }
 
-/*
-	Esta funcion retorna el numero enviado como parametro con un formato de 
-	numero como currency. (e.g. 123,456,789.98).
-	Version:
-		> 1.0
-	Parametro:
-		> num: [number] Cualquier numero que se quiera formatear.
-*/
-
 /**
  * Esta funcion retorna el numero enviado como argumento con un formato de
 	numero como currency. (e.g. `123456789.98` -> `123,456,789.98`).
@@ -348,21 +331,6 @@ function fAvisoNew( titulo, msg ){
 function formatNumber(num) {
 	return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
 }
-
-/*
-	Funcion que toma una tabla y totaliza las columnas que se especifiquen en 
-	el array de celdas el cual empieza desde indice 0.
-	Version:
-		> 1.3
-	Parametros:
-		> obj_tabla: [Object] El object que representa la tabla a la que
-					se quiere agregar totales.
-		> celdas: [Array] Un array que contiene el numero de las columnas que se deben
-					totalizar; empezando desde cero. (e.g. [1, 3] totaliza la columna 2 y 4
-					de la tabla especificada en el obj_tabla).
-		> clase: [String] [opcional] Especifica el nombre de la clase que deberia tener el tag <tr>
-					que contiene los totales.
-*/
 
 /**
  * Funcion que toma una tabla y totaliza las columnas que se especifiquen en
@@ -550,8 +518,8 @@ function addBrowser(id_field, proyecto, objeto, where, imgFile = "fa-search.png"
 
     innerDiv.addEventListener('click', function(){
         window.open("rbplus?p=" + proyecto + "&o=" + objeto + "&w=" + where + "&VACAMPOS=" + id_field.toString().replace(/--search/g, ""),'', 'menubar=yes,resizable=yes,toolbar=yes,titlebar=yes,scrollbars=yes,left=300,top=150,width=1100,height=575');
-        jQuery(document.querySelectorAll("div.fadedBehind")[0]).show(950);
-        jQuery(this).parent().hide(950);
+        document.querySelectorAll("div.fadedBehind")[0].style.display = "";
+        this.parentElement.style.display = "none";
     });
 
     // Imagen de lupita
@@ -652,13 +620,13 @@ class WB {
 
 document.addEventListener('DOMContentLoaded', function(){
 	// Field determines if is tab form or not.
-	const tabValue = (document.querySelector("input[name*='VO_TABS']") != null)
-		? document.querySelector("input[name*='VO_TABS']").value
+	const tabValue = document.querySelector("input[name*='VO_TABS']")
+		? Number(document.querySelector("input[name*='VO_TABS']").value)
 		: 0;
-	const isTabForm = (tabValue == 1);
+	const isTabForm = (tabValue === 1);
 
-	const do_tab_movement = isTabForm && (IS_CHROME || IS_OPERA || IS_EDGE || IS_FIREFOX);
+	const doTabMovement = isTabForm && (IS_CHROME || IS_OPERA || IS_EDGE || IS_FIREFOX);
 
 	// Al cargar la pagina, ejecutar la funcion para acomodar los tabs en caso de ser necesario.
-	move_tabs(do_tab_movement, "tabstop");
+	move_tabs(doTabMovement, "tabstop");
 });

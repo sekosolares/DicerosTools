@@ -1,6 +1,6 @@
 /******************************************************************************
 		Author: .asolares.
-		Version: 1.2.4
+		Version: 1.2.5
 
 		Este script contiene funciones con diferentes utilidades para
 		diferentes eventos.
@@ -170,19 +170,24 @@ function filterCombo(filtroId, comboId) {
 	filter_combo(filtroId, comboId);
 }
 
-/*
-	Funcion que se llama desde el evento onKeyUp, onKeyPress o en onKeyDown del input filtro. Evalua
+/**
+* Funcion que se llama desde el evento onKeyUp, onKeyPress o en onKeyDown del input filtro. Evalua
 	si lo que esta escrito en el filtro concuerda con algun elemento de la tabla que se desea filtrar.
-	Version:
-		> 1.0
-	Parametros:
-		> filtro_id: [String] Es el id del input que se utilizara como criterio para filtrar la tabla.
-		> table_id: [String] Id de la tabla cuyos elementos seran filtrados.
-		> cells_array: [Array] Este array contiene los numeros de las columnas que seran filtradas,
+* @param {string} filtro_id Es el id del input que se utilizara como criterio para filtrar la tabla.
+* @param {string} table_id Id de la tabla cuyos elementos seran filtrados.
+* @param {number[] | 'all'} cells_array Este array contiene los numeros de las columnas que seran filtradas,
 									iniciando desde cero. (e.g. [0, 2, 3] filtra la primera, tercera y cuarta columna.
 									[0] solo filtra la primera columna).
+* @param {string[]} exclude_rows Este array contiene los id o clases de las filas que no seran filtradas.
+* @param {function} after_filter_callback Funcion que se ejecutara despues de filtrar la tabla.
 */
-function filter_table(filtro_id, table_id, cells_array='all'){
+function filter_table(
+	filtro_id,
+	table_id,
+	cells_array='all',
+	exclude_rows=[],
+	after_filter_callback=null
+){
 	let input, filter, table, tr, i, j;
 
 	input = document.getElementById(filtro_id);
@@ -193,6 +198,12 @@ function filter_table(filtro_id, table_id, cells_array='all'){
 	for (i = 0; i < tr.length; i++) {
 		let coincide = false;
 		let coincideAnt = true;
+		const trId = tr[i].getAttribute("id");
+		const trClasses = Object.values(tr[i].classList);
+
+		if (exclude_rows.includes(trId) || trClasses.some(c => exclude_rows.includes(c))) {
+			continue;
+		}
 
 		if(cells_array === 'all') {
 			cells_array = [];
@@ -234,6 +245,10 @@ function filter_table(filtro_id, table_id, cells_array='all'){
 				if(isTh <= 0)
 					tr[i].style.display = "none";
 		}
+	}
+
+	if (after_filter_callback) {
+		after_filter_callback();
 	}
 }
 

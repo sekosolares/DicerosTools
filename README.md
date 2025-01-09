@@ -168,7 +168,7 @@ filter_table(filtro_id,table_id,cells_array)
 **Parametros**:
 - **filtro_id**: *String* Es el id del input que se utilizara como criterio para filtrar la tabla.
 - **table_id**: *String* Id de la tabla cuyos elementos seran filtrados.
-- **cells_array**: *Array | 'all'* Este array contiene los numeros de las columnas que seran filtradas, iniciando desde cero. (e.g. [0, 2, 3] filtra la primera, tercera y cuarta columna. [ 0 ] solo filtra la primera columna). Si el valor es **all**, se filtran todas las columnas.
+- **cells_array**: *Array or 'all'* Este array contiene los numeros de las columnas que seran filtradas, iniciando desde cero. (e.g. [0, 2, 3] filtra la primera, tercera y cuarta columna. [ 0 ] solo filtra la primera columna). Si el valor es **all**, se filtran todas las columnas.
 - **exclude_rows**: *Array* Este array contiene los id o clases de las filas que no seran filtradas. (e.g. ['bold-text', 'ImportantRow'], excluye las filas con la clase 'bold-text' y las filas con ID 'ImportantRow').
 - **after_filter_callback**: *Function* Funcion que se ejecutara despues de filtrar la tabla.
 

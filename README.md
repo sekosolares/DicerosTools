@@ -168,20 +168,23 @@ filter_table(filtro_id,table_id,cells_array)
 **Parametros**:
 - **filtro_id**: *String* Es el id del input que se utilizara como criterio para filtrar la tabla.
 - **table_id**: *String* Id de la tabla cuyos elementos seran filtrados.
-- **cells_array**: *Array* Este array contiene los numeros de las columnas que seran filtradas, iniciando desde cero. (e.g. [0, 2, 3] filtra la primera, tercera y cuarta columna. [ 0 ] solo filtra la primera columna).
+- **cells_array**: *Array | 'all'* Este array contiene los numeros de las columnas que seran filtradas, iniciando desde cero. (e.g. [0, 2, 3] filtra la primera, tercera y cuarta columna. [ 0 ] solo filtra la primera columna). Si el valor es **all**, se filtran todas las columnas.
+- **exclude_rows**: *Array* Este array contiene los id o clases de las filas que no seran filtradas. (e.g. ['bold-text', 'ImportantRow'], excluye las filas con la clase 'bold-text' y las filas con ID 'ImportantRow').
+- **after_filter_callback**: *Function* Funcion que se ejecutara despues de filtrar la tabla.
 
 
 **Ejemplo**:
 Similar a la función de *filter_combo*, aquí se filtrarán los datos en la columna **Nombre** de la tabla basado en lo que se escriba en el input.
 
 ```html
-<input type="text" id="filtro" onkeyup="filter_table('filtro', 'tabla1', [1])">
+<input type="text" id="filtro" onkeyup="filter_table('filtro', 'tabla1', [1], ['g-total'], totalizarTabla1)">
 <table id="tabla1">
     <thead>
         <tr>
             <th> Codigo </th>
             <th> Nombre </th>
             <th> Apellido </th>
+            <th> Salario </th>
         </tr>
     </thead>
     <tbody>
@@ -189,19 +192,41 @@ Similar a la función de *filter_combo*, aquí se filtrarán los datos en la col
             <td>01</td>
             <td>Marco Antonio</td>
             <td>Solis Gutierrez</td>
+            <td>1200</td>
         </tr>
         <tr>
             <td>02</td>
             <td>Laura Larisa</td>
             <td>Garcia Lemus</td>
+            <td>8100</td>
         </tr>
         <tr>
             <td>03</td>
             <td>Genesis Valeria</td>
             <td>Fernandez Sagastume</td>
+            <td>500</td>
+        </tr>
+        <tr>
+            <td>04</td>
+            <td>Andres Felipe</td>
+            <td>Obrador Cu</td>
+            <td>2910</td>
+        </tr>
+        <tr>
+            <td>05</td>
+            <td>Andrea Andrea</td>
+            <td>Salazar Montufar</td>
+            <td>100</td>
         </tr>
     </tbody>
 </table>
+<script>
+    function totalizarTabla1() {
+        // Totaliza salarios
+        totalizarTabla(document.getElementById('tabla1'), [3], 'g-total');
+    }
+    totalizarTabla1();
+</script>
 ```
 
 <a href="https://codepen.io/capulusnoctis/embed/qBEegGz?height=265&theme-id=default&default-tab=html,result" style="padding:8px 10px;background:rgb(29, 135, 255);border:0;color:#fff;font-family:Arial,Helvetica,sans-serif;border-radius:4px;text-decoration:none;" target="_blank">Ver Ejemplo</a>
